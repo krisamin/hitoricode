@@ -14,6 +14,7 @@
 //
 
 import AppKit
+import Foundation
 import SwiftUI
 
 struct ContentView: View {
@@ -23,13 +24,9 @@ struct ContentView: View {
     var body: some View {
         VStack {
             CodeEditorView(text: $editorContent)
-                .frame(minWidth: 300, minHeight: 200)
             HStack {
-                Button("Start LSP Server") {
+                Button("Start LSP") {
                     startLSPServer()
-                }
-                Button("Initialize LSP") {
-                    initializeLSP()
                 }
             }
         }
@@ -38,33 +35,18 @@ struct ContentView: View {
         }
     }
 
-    // Set up the language server
     private func setupLSP() {
-        lsp = LanguageServerInteraction(serverPath: "/Users/krisamin/.bun/bin/bun")
+        lsp = LanguageServerInteraction(serverPath: "/Users/krisamin/.nvm/versions/node/v18.20.4/bin/node")
     }
 
-    // Start the LSP server
     private func startLSPServer() {
         lsp?.startServer()
+        sendInitializeRequest()
     }
 
-    // Send an initialization request to the LSP server
-    private func initializeLSP() {
+    private func sendInitializeRequest() {
         guard let lsp = lsp, let processId = lsp.processId else { return }
-
-        let request = """
-        {
-            "jsonrpc": "2.0",
-            "id": 1,
-            "method": "initialize",
-            "params": {
-                "processId": \(processId),
-                "rootUri": null,
-                "capabilities": {}
-            }
-        }
-        """
-
+        let request = LSPRequests.initialize(processId: processId)
         lsp.sendRequest(request)
     }
 }
@@ -75,26 +57,9 @@ struct CodeEditorView: NSViewRepresentable {
     func makeNSView(context: Context) -> NSScrollView {
         let scrollView = NSScrollView()
         let textView = NSTextView()
-
+        configureTextView(textView)
         scrollView.documentView = textView
-        textView.isRichText = false
-
-        let font = NSFont(name: "goorm Sans Code 400", size: 20)!
-        textView.typingAttributes = [
-            .font: font,
-            .ligature: false,
-            .foregroundColor: NSColor.black,
-        ]
-
-        textView.delegate = context.coordinator
-
-        textView.backgroundColor = NSColor.clear
-        scrollView.backgroundColor = NSColor.clear
         scrollView.drawsBackground = false
-
-        textView.autoresizingMask = [.width]
-        textView.translatesAutoresizingMaskIntoConstraints = true
-
         return scrollView
     }
 
@@ -110,6 +75,19 @@ struct CodeEditorView: NSViewRepresentable {
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
+    }
+
+    private func configureTextView(_ textView: NSTextView) {
+        let font = NSFont(name: "goorm Sans Code 400", size: 20)!
+        textView.isRichText = false
+        textView.typingAttributes = [
+            .font: font,
+            .ligature: false,
+            .foregroundColor: NSColor.black,
+        ]
+        textView.backgroundColor = NSColor.clear
+        textView.autoresizingMask = [.width]
+        textView.translatesAutoresizingMaskIntoConstraints = true
     }
 
     class Coordinator: NSObject, NSTextViewDelegate {
@@ -129,16 +107,10 @@ struct CodeEditorView: NSViewRepresentable {
     func highlightSyntax(in textView: NSTextView) {
         let attributedString = NSMutableAttributedString(string: textView.string)
         let fullRange = NSRange(location: 0, length: attributedString.length)
-
         let font = textView.font!
         attributedString.addAttributes(
-            [
-                .font: font,
-                .ligature: false,
-                .foregroundColor: NSColor.black,
-            ],
-            range: fullRange
-        )
+            [.font: font, .ligature: false, .foregroundColor: NSColor.black],
+            range: fullRange)
 
         let keywords = [
             ("칸나", NSColor(red: 55 / 255, green: 53 / 255, blue: 132 / 255, alpha: 1)),
@@ -154,21 +126,25 @@ struct CodeEditorView: NSViewRepresentable {
         ]
 
         for (keyword, color) in keywords {
-            let regex = try? NSRegularExpression(pattern: "\\b\(keyword)\\b", options: .caseInsensitive)
-            regex?.enumerateMatches(in: textView.string, options: [], range: fullRange) { match, _, _ in
-                if let matchRange = match?.range {
-                    attributedString.addAttribute(.foregroundColor, value: color, range: matchRange)
-                }
-            }
+            highlightKeyword(in: textView, keyword: keyword, color: color, fullRange: fullRange)
         }
 
         let selectedRanges = textView.selectedRanges
         textView.textStorage?.setAttributedString(attributedString)
         textView.selectedRanges = selectedRanges
     }
-}
 
-import Foundation
+    private func highlightKeyword(in textView: NSTextView, keyword: String, color: NSColor, fullRange: NSRange) {
+        let regex = try? NSRegularExpression(pattern: "\\b\(keyword)\\b", options: .caseInsensitive)
+        regex?.enumerateMatches(in: textView.string, options: [], range: fullRange) { match, _, _ in
+            if let matchRange = match?.range {
+                let attributedString = NSMutableAttributedString(attributedString: textView.attributedString())
+                attributedString.addAttribute(.foregroundColor, value: color, range: matchRange)
+                textView.textStorage?.setAttributedString(attributedString)
+            }
+        }
+    }
+}
 
 class LanguageServerInteraction {
     private let serverPath: String
@@ -176,7 +152,7 @@ class LanguageServerInteraction {
     private var inputPipe: Pipe?
     private var outputPipe: Pipe?
     private var errorPipe: Pipe?
-    private var responseBuffer = Data() // Buffer to accumulate data until we have a full message
+    private var responseBuffer = Data()
 
     var processId: Int32?
 
@@ -184,26 +160,12 @@ class LanguageServerInteraction {
         self.serverPath = serverPath
     }
 
-    // Starts the language server process
     func startServer() {
-        process = Process()
-        process?.executableURL = URL(fileURLWithPath: serverPath)
-        process?.arguments = ["x", "--bun", "typescript-language-server", "--stdio"]
-
-        inputPipe = Pipe()
-        outputPipe = Pipe()
-        errorPipe = Pipe()  // Capture errors in a separate pipe
-
-        process?.standardInput = inputPipe
-        process?.standardOutput = outputPipe
-        process?.standardError = errorPipe
-
+        initializeProcess()
         do {
             try process?.run()
             processId = process?.processIdentifier
             print("Language server started with PID: \(processId ?? 0)")
-
-            // Start reading the server's output and errors
             startReadingResponses()
             startReadingErrors()
         } catch {
@@ -211,27 +173,36 @@ class LanguageServerInteraction {
         }
     }
 
-    // Sends an LSP request to the server
     func sendRequest(_ request: String) {
         let contentLength = request.utf8.count
-        let header = "Content-Length: \(contentLength)\r\n\r\n"
-        let fullRequest = header + request
-
-        guard let inputPipe = inputPipe else { return }
-        inputPipe.fileHandleForWriting.write(fullRequest.data(using: .utf8)!)
+        let fullRequest = "Content-Length: \(contentLength)\r\n\r\n\(request)"
+        inputPipe?.fileHandleForWriting.write(fullRequest.data(using: .utf8)!)
         print("Sent request: \(fullRequest)")
     }
 
-    // Reads the server's responses asynchronously
+    private func initializeProcess() {
+        process = Process()
+        process?.executableURL = URL(fileURLWithPath: serverPath)
+        process?.arguments = [
+            "/Users/krisamin/.nvm/versions/node/v18.20.4/lib/node_modules/typescript-language-server/lib/cli.mjs",
+            "--stdio",
+        ]
+        inputPipe = Pipe()
+        outputPipe = Pipe()
+        errorPipe = Pipe()
+        process?.standardInput = inputPipe
+        process?.standardOutput = outputPipe
+        process?.standardError = errorPipe
+    }
+
     private func startReadingResponses() {
         outputPipe?.fileHandleForReading.readabilityHandler = { [weak self] handle in
+            guard let self = self else { return }
             let data = handle.availableData
-            guard let self = self, data.count > 0 else { return }
             self.handleReceivedData(data)
         }
     }
 
-    // Reads the server's errors asynchronously
     private func startReadingErrors() {
         errorPipe?.fileHandleForReading.readabilityHandler = { handle in
             let errorData = handle.availableData
@@ -241,80 +212,57 @@ class LanguageServerInteraction {
         }
     }
 
-    // Handles incoming data from the server, parsing based on LSP protocol
     private func handleReceivedData(_ data: Data) {
         responseBuffer.append(data)
-
-        while true {
-            // Look for the LSP header terminator \r\n\r\n
-            if let headerRange = responseBuffer.range(of: Data("\r\n\r\n".utf8)) {
-                let headerData = responseBuffer.subdata(in: 0..<headerRange.lowerBound)
-
-                // Parse the Content-Length header
-                if let headerString = String(data: headerData, encoding: .utf8),
-                   let contentLength = parseContentLength(from: headerString) {
-
-                    // Calculate total message length
-                    let messageLength = headerRange.upperBound + contentLength
-
-                    // If we have the full message, process it
-                    if responseBuffer.count >= messageLength {
-                        let messageData = responseBuffer.subdata(in: headerRange.upperBound..<messageLength)
-
-                        if let messageString = String(data: messageData, encoding: .utf8) {
-                            print("Received response: \(messageString)")
-                            // Here you can handle or dispatch the response as needed
-                        }
-
-                        // Remove the processed message from the buffer
-                        responseBuffer.removeSubrange(0..<messageLength)
-                    } else {
-                        // Wait for more data
-                        break
-                    }
-                } else {
-                    print("Failed to parse Content-Length")
-                    break
-                }
-            } else {
-                // Header is incomplete, wait for more data
-                break
-            }
+        while let message = extractMessageFromBuffer() {
+            print("Received response: \(message)")
         }
     }
 
-    // Parses the Content-Length from the LSP header
-    private func parseContentLength(from header: String) -> Int? {
-        let lines = header.components(separatedBy: "\r\n")
-        for line in lines {
-            if line.lowercased().starts(with: "content-length:") {
-                if let value = line.split(separator: ":").last,
-                   let contentLength = Int(value.trimmingCharacters(in: .whitespaces)) {
-                    return contentLength
-                }
-            }
+    private func extractMessageFromBuffer() -> String? {
+        guard let headerRange = responseBuffer.range(of: Data("\r\n\r\n".utf8)) else { return nil }
+        let headerData = responseBuffer.subdata(in: 0..<headerRange.lowerBound)
+        guard let contentLength = parseContentLength(from: String(data: headerData, encoding: .utf8)) else {
+            return nil
         }
-        return nil
+
+        let totalMessageLength = headerRange.upperBound + contentLength
+        guard responseBuffer.count >= totalMessageLength else { return nil }
+
+        let messageData = responseBuffer.subdata(in: headerRange.upperBound..<totalMessageLength)
+        responseBuffer.removeSubrange(0..<totalMessageLength)
+        return String(data: messageData, encoding: .utf8)
     }
 
-    // Stop the server if needed
+    private func parseContentLength(from header: String?) -> Int? {
+        guard let header = header else { return nil }
+        return
+            header
+            .components(separatedBy: "\r\n")
+            .first(where: { $0.lowercased().starts(with: "content-length:") })
+            .flatMap { Int($0.split(separator: ":")[1].trimmingCharacters(in: .whitespaces)) }
+    }
+
     func stopServer() {
         process?.terminate()
         print("Language server stopped.")
     }
 }
 
-// Extension for reading lines from a FileHandle
-extension FileHandle {
-    func readLine() -> Data? {
-        var lineData = Data()
-        while let byte = readData(ofLength: 1).first {
-            lineData.append(byte)
-            if byte == UInt8(ascii: "\n") {
-                return lineData
+struct LSPRequests {
+    static func initialize(processId: Int32) -> String {
+        return """
+            {
+                "jsonrpc": "2.0",
+                "id": 1,
+                "method": "initialize",
+                "params": {
+                    "processId": \(processId),
+                    "rootUri": null,
+                    "capabilities": {}
+                }
             }
-        }
-        return lineData.isEmpty ? nil : lineData
+            """
     }
 }
 
