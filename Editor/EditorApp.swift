@@ -15,11 +15,38 @@
 
 import SwiftUI
 
+struct VisualEffectView: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSVisualEffectView {
+        let view = NSVisualEffectView()
+        view.blendingMode = .behindWindow
+        view.state = .active
+        view.material = .fullScreenUI
+        return view
+    }
+
+    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {}
+}
+
 @main
 struct EditorApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .containerBackground(for: .window) {
+                    ZStack {
+                        VisualEffectView()
+                        Color.white.opacity(0.5)
+                    }
+                }
+        }
+        .windowStyle(HiddenTitleBarWindowStyle())
+        .commandsRemoved()
+        .commands {
+            CommandMenu("Custom") {
+                Button("Item 1") {}
+                Divider()
+                Button("Item 2") {}
+            }
         }
     }
 }
