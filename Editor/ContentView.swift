@@ -57,9 +57,23 @@ struct CodeEditorView: NSViewRepresentable {
     func makeNSView(context: Context) -> NSScrollView {
         let scrollView = NSScrollView()
         let textView = NSTextView()
-        configureTextView(textView)
+
         scrollView.documentView = textView
+        textView.isRichText = false
+        let font = NSFont(name: "goorm Sans Code 400", size: 20)!
+        textView.typingAttributes = [
+            .font: font,
+            .ligature: false,
+            .foregroundColor: NSColor.black,
+        ]
+
+        textView.delegate = context.coordinator
+        textView.backgroundColor = NSColor.clear
+        scrollView.backgroundColor = NSColor.clear
         scrollView.drawsBackground = false
+        textView.autoresizingMask = [.width]
+        textView.translatesAutoresizingMaskIntoConstraints = true
+
         return scrollView
     }
 
@@ -75,19 +89,6 @@ struct CodeEditorView: NSViewRepresentable {
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
-    }
-
-    private func configureTextView(_ textView: NSTextView) {
-        let font = NSFont(name: "goorm Sans Code 400", size: 20)!
-        textView.isRichText = false
-        textView.typingAttributes = [
-            .font: font,
-            .ligature: false,
-            .foregroundColor: NSColor.black,
-        ]
-        textView.backgroundColor = NSColor.clear
-        textView.autoresizingMask = [.width]
-        textView.translatesAutoresizingMaskIntoConstraints = true
     }
 
     class Coordinator: NSObject, NSTextViewDelegate {
@@ -109,8 +110,11 @@ struct CodeEditorView: NSViewRepresentable {
         let fullRange = NSRange(location: 0, length: attributedString.length)
         let font = textView.font!
         attributedString.addAttributes(
-            [.font: font, .ligature: false, .foregroundColor: NSColor.black],
-            range: fullRange)
+            [
+                .font: font,
+                .ligature: false,
+                .foregroundColor: NSColor.black,
+            ], range: fullRange)
 
         let keywords = [
             ("칸나", NSColor(red: 55 / 255, green: 53 / 255, blue: 132 / 255, alpha: 1)),
@@ -126,23 +130,17 @@ struct CodeEditorView: NSViewRepresentable {
         ]
 
         for (keyword, color) in keywords {
-            highlightKeyword(in: textView, keyword: keyword, color: color, fullRange: fullRange)
+            let regex = try? NSRegularExpression(pattern: "\\b\(keyword)\\b", options: .caseInsensitive)
+            regex?.enumerateMatches(in: textView.string, options: [], range: fullRange) { match, _, _ in
+                if let matchRange = match?.range {
+                    attributedString.addAttribute(.foregroundColor, value: color, range: matchRange)
+                }
+            }
         }
 
         let selectedRanges = textView.selectedRanges
         textView.textStorage?.setAttributedString(attributedString)
         textView.selectedRanges = selectedRanges
-    }
-
-    private func highlightKeyword(in textView: NSTextView, keyword: String, color: NSColor, fullRange: NSRange) {
-        let regex = try? NSRegularExpression(pattern: "\\b\(keyword)\\b", options: .caseInsensitive)
-        regex?.enumerateMatches(in: textView.string, options: [], range: fullRange) { match, _, _ in
-            if let matchRange = match?.range {
-                let attributedString = NSMutableAttributedString(attributedString: textView.attributedString())
-                attributedString.addAttribute(.foregroundColor, value: color, range: matchRange)
-                textView.textStorage?.setAttributedString(attributedString)
-            }
-        }
     }
 }
 
