@@ -20,7 +20,7 @@ struct ContentView: View {
     @State private var editorContent = ""
 
     var body: some View {
-        VStack{
+        VStack {
             CodeEditorView(text: $editorContent)
                 .frame(minWidth: 300, minHeight: 200)
         }
@@ -99,16 +99,16 @@ struct CodeEditorView: NSViewRepresentable {
         )
 
         let keywords = [
-            ("칸나", NSColor(red: 55/255, green: 53/255, blue: 132/255, alpha: 1)),
-            ("유니", NSColor(red: 183/255, green: 125/255, blue: 228/255, alpha: 1)),
-            ("히나", NSColor(red: 242/255, green: 220/255, blue: 191/255, alpha: 1)),
-            ("마시로", NSColor(red: 159/255, green: 62/255, blue: 65/255, alpha: 1)),
-            ("리제", NSColor(red: 151/255, green: 27/255, blue: 47/255, alpha: 1)),
-            ("타비", NSColor(red: 154/255, green: 218/255, blue: 255/255, alpha: 1)),
-            ("시부키", NSColor(red: 194/255, green: 175/255, blue: 230/255, alpha: 1)),
-            ("린", NSColor(red: 43/255, green: 102/255, blue: 192/255, alpha: 1)),
-            ("나나", NSColor(red: 223/255, green: 118/255, blue: 133/255, alpha: 1)),
-            ("리코", NSColor(red: 166/255, green: 208/255, blue: 166/255, alpha: 1)),
+            ("칸나", NSColor(red: 55 / 255, green: 53 / 255, blue: 132 / 255, alpha: 1)),
+            ("유니", NSColor(red: 183 / 255, green: 125 / 255, blue: 228 / 255, alpha: 1)),
+            ("히나", NSColor(red: 242 / 255, green: 220 / 255, blue: 191 / 255, alpha: 1)),
+            ("마시로", NSColor(red: 159 / 255, green: 62 / 255, blue: 65 / 255, alpha: 1)),
+            ("리제", NSColor(red: 151 / 255, green: 27 / 255, blue: 47 / 255, alpha: 1)),
+            ("타비", NSColor(red: 154 / 255, green: 218 / 255, blue: 255 / 255, alpha: 1)),
+            ("시부키", NSColor(red: 194 / 255, green: 175 / 255, blue: 230 / 255, alpha: 1)),
+            ("린", NSColor(red: 43 / 255, green: 102 / 255, blue: 192 / 255, alpha: 1)),
+            ("나나", NSColor(red: 223 / 255, green: 118 / 255, blue: 133 / 255, alpha: 1)),
+            ("리코", NSColor(red: 166 / 255, green: 208 / 255, blue: 166 / 255, alpha: 1)),
         ]
 
         for (keyword, color) in keywords {
