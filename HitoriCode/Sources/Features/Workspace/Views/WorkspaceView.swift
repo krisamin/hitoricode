@@ -8,16 +8,16 @@
 //  https://isamin.kr
 //  https://github.com/krisamin
 //
-//  Created : 10/7/24
+//  Created : 10/8/24
 //  Package : HitoriCode
-//  File    : ContentView.swift
+//  File    : WorkspaceView.swift
 //
 
 import AppKit
 import Foundation
 import SwiftUI
 
-struct ContentView: View {
+struct WorkspaceView: View {
     @State private var editorContent = ""
     @State private var lsp: LanguageServerInteraction?
 
@@ -29,9 +29,6 @@ struct ContentView: View {
                     startLSPServer()
                 }
             }
-        }
-        .onAppear {
-            setupLSP()
         }
     }
 
@@ -69,6 +66,7 @@ struct CodeEditorView: NSViewRepresentable {
 
         textView.delegate = context.coordinator
         textView.backgroundColor = NSColor.clear
+        textView.textContainer?.lineFragmentPadding = 0
         scrollView.backgroundColor = NSColor.clear
         scrollView.drawsBackground = false
         textView.autoresizingMask = [.width]
@@ -261,6 +259,6 @@ enum LSPRequests {
 }
 
 #Preview {
-    ContentView()
+    WorkspaceView()
         .frame(width: 600, height: 600)
 }

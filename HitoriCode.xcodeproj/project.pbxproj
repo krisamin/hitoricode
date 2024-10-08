@@ -11,6 +11,7 @@
 		7314740D2CB4CB7C00DC5A45 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 7314740B2CB4CB7B00DC5A45 /* .swift-version */; };
 		7314740F2CB4CCBB00DC5A45 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */; };
 		731474112CB4CD2B00DC5A45 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = 731474102CB4CD2A00DC5A45 /* .swiftformat */; };
+		73C2CD5B2CB4FB4C00C608BC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 73C2CD5A2CB4FB4900C608BC /* README.md */; };
 		73E32F092CB3AA3F002B21C5 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 73E32F082CB3AA3F002B21C5 /* SwiftUIX */; };
 /* End PBXBuildFile section */
 
@@ -19,13 +20,14 @@
 		7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		731474102CB4CD2A00DC5A45 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		738B5CD92CB3A68A0089A799 /* HitoriCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitoriCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73C2CD5A2CB4FB4900C608BC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		739D95592CB3C92F00156A3C /* Exceptions for "HitoriCode" folder in "HitoriCode" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info.plist,
 			);
 			target = 738B5CD82CB3A68A0089A799 /* HitoriCode */;
 		};
@@ -61,8 +63,9 @@
 				738B5CDB2CB3A68A0089A799 /* HitoriCode */,
 				738B5CDA2CB3A68A0089A799 /* Products */,
 				7314740B2CB4CB7B00DC5A45 /* .swift-version */,
-				7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */,
 				731474102CB4CD2A00DC5A45 /* .swiftformat */,
+				7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */,
+				73C2CD5A2CB4FB4900C608BC /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +152,7 @@
 				7314740F2CB4CCBB00DC5A45 /* .swiftlint.yml in Resources */,
 				7314740D2CB4CB7C00DC5A45 /* .swift-version in Resources */,
 				731474112CB4CD2B00DC5A45 /* .swiftformat in Resources */,
+				73C2CD5B2CB4FB4C00C608BC /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,7 +333,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = HitoriCode/HitoriCode.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HitoriCode/Resources/HitoriCode.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -338,7 +342,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HitoriCode/Info.plist;
+				INFOPLIST_FILE = HitoriCode/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HitoriCode;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -359,7 +363,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = HitoriCode/HitoriCode.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HitoriCode/Resources/HitoriCode.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -368,7 +372,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HitoriCode/Info.plist;
+				INFOPLIST_FILE = HitoriCode/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HitoriCode;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
