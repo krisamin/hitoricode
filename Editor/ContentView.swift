@@ -45,7 +45,7 @@ struct ContentView: View {
     }
 
     private func sendInitializeRequest() {
-        guard let lsp = lsp, let processId = lsp.processId else { return }
+        guard let lsp, let processId = lsp.processId else { return }
         let request = LSPRequests.initialize(processId: processId)
         lsp.sendRequest(request)
     }
@@ -64,7 +64,7 @@ struct CodeEditorView: NSViewRepresentable {
         textView.typingAttributes = [
             .font: font,
             .ligature: false,
-            .foregroundColor: NSColor.black,
+            .foregroundColor: NSColor.black
         ]
 
         textView.delegate = context.coordinator
@@ -77,7 +77,7 @@ struct CodeEditorView: NSViewRepresentable {
         return scrollView
     }
 
-    func updateNSView(_ nsView: NSScrollView, context: Context) {
+    func updateNSView(_ nsView: NSScrollView, context _: Context) {
         guard let textView = nsView.documentView as? NSTextView else { return }
         if textView.string != text {
             let selectedRanges = textView.selectedRanges
@@ -113,8 +113,10 @@ struct CodeEditorView: NSViewRepresentable {
             [
                 .font: font,
                 .ligature: false,
-                .foregroundColor: NSColor.black,
-            ], range: fullRange)
+                .foregroundColor: NSColor.black
+            ],
+            range: fullRange
+        )
 
         let keywords = [
             ("칸나", NSColor(red: 55 / 255, green: 53 / 255, blue: 132 / 255, alpha: 1)),
@@ -126,7 +128,7 @@ struct CodeEditorView: NSViewRepresentable {
             ("시부키", NSColor(red: 194 / 255, green: 175 / 255, blue: 230 / 255, alpha: 1)),
             ("린", NSColor(red: 43 / 255, green: 102 / 255, blue: 192 / 255, alpha: 1)),
             ("나나", NSColor(red: 223 / 255, green: 118 / 255, blue: 133 / 255, alpha: 1)),
-            ("리코", NSColor(red: 166 / 255, green: 208 / 255, blue: 166 / 255, alpha: 1)),
+            ("리코", NSColor(red: 166 / 255, green: 208 / 255, blue: 166 / 255, alpha: 1))
         ]
 
         for (keyword, color) in keywords {
@@ -183,7 +185,7 @@ class LanguageServerInteraction {
         process?.executableURL = URL(fileURLWithPath: serverPath)
         process?.arguments = [
             "/Users/krisamin/.nvm/versions/node/v18.20.4/lib/node_modules/typescript-language-server/lib/cli.mjs",
-            "--stdio",
+            "--stdio"
         ]
         inputPipe = Pipe()
         outputPipe = Pipe()
@@ -195,9 +197,9 @@ class LanguageServerInteraction {
 
     private func startReadingResponses() {
         outputPipe?.fileHandleForReading.readabilityHandler = { [weak self] handle in
-            guard let self = self else { return }
+            guard let self else { return }
             let data = handle.availableData
-            self.handleReceivedData(data)
+            handleReceivedData(data)
         }
     }
 
@@ -219,7 +221,7 @@ class LanguageServerInteraction {
 
     private func extractMessageFromBuffer() -> String? {
         guard let headerRange = responseBuffer.range(of: Data("\r\n\r\n".utf8)) else { return nil }
-        let headerData = responseBuffer.subdata(in: 0..<headerRange.lowerBound)
+        let headerData = responseBuffer.subdata(in: 0 ..< headerRange.lowerBound)
         guard let contentLength = parseContentLength(from: String(data: headerData, encoding: .utf8)) else {
             return nil
         }
@@ -227,18 +229,18 @@ class LanguageServerInteraction {
         let totalMessageLength = headerRange.upperBound + contentLength
         guard responseBuffer.count >= totalMessageLength else { return nil }
 
-        let messageData = responseBuffer.subdata(in: headerRange.upperBound..<totalMessageLength)
-        responseBuffer.removeSubrange(0..<totalMessageLength)
+        let messageData = responseBuffer.subdata(in: headerRange.upperBound ..< totalMessageLength)
+        responseBuffer.removeSubrange(0 ..< totalMessageLength)
         return String(data: messageData, encoding: .utf8)
     }
 
     private func parseContentLength(from header: String?) -> Int? {
-        guard let header = header else { return nil }
+        guard let header else { return nil }
         return
             header
-            .components(separatedBy: "\r\n")
-            .first(where: { $0.lowercased().starts(with: "content-length:") })
-            .flatMap { Int($0.split(separator: ":")[1].trimmingCharacters(in: .whitespaces)) }
+                .components(separatedBy: "\r\n")
+                .first(where: { $0.lowercased().starts(with: "content-length:") })
+                .flatMap { Int($0.split(separator: ":")[1].trimmingCharacters(in: .whitespaces)) }
     }
 
     func stopServer() {
@@ -247,20 +249,20 @@ class LanguageServerInteraction {
     }
 }
 
-struct LSPRequests {
+enum LSPRequests {
     static func initialize(processId: Int32) -> String {
-        return """
-            {
-                "jsonrpc": "2.0",
-                "id": 1,
-                "method": "initialize",
-                "params": {
-                    "processId": \(processId),
-                    "rootUri": null,
-                    "capabilities": {}
-                }
+        """
+        {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "initialize",
+            "params": {
+                "processId": \(processId),
+                "rootUri": null,
+                "capabilities": {}
             }
-            """
+        }
+        """
     }
 }
 

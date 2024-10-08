@@ -1,0 +1,23 @@
+check_for_updates: true
+
+force_cast: warning
+force_try:
+  severity: warning
+
+line_length: 120
+
+type_name:
+  min_length: 3
+  max_length:
+    warning: 40
+    error: 50
+  allowed_symbols: ["_"]
+
+identifier_name:
+  min_length: 3
+  excluded:
+    - id
+    - URL
+    - GlobalAPIKey
+
+reporter: "xcode"

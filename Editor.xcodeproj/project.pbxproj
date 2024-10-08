@@ -7,10 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		731474042CB4C8FE00DC5A45 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 731474032CB4C8FE00DC5A45 /* SwiftFormat */; };
+		7314740D2CB4CB7C00DC5A45 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 7314740B2CB4CB7B00DC5A45 /* .swift-version */; };
+		7314740F2CB4CCBB00DC5A45 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */; };
+		731474112CB4CD2B00DC5A45 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = 731474102CB4CD2A00DC5A45 /* .swiftformat */; };
 		73E32F092CB3AA3F002B21C5 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 73E32F082CB3AA3F002B21C5 /* SwiftUIX */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7314740B2CB4CB7B00DC5A45 /* .swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
+		7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		731474102CB4CD2A00DC5A45 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		738B5CD92CB3A68A0089A799 /* Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Editor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -41,6 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73E32F092CB3AA3F002B21C5 /* SwiftUIX in Frameworks */,
+				731474042CB4C8FE00DC5A45 /* SwiftFormat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +60,9 @@
 			children = (
 				738B5CDB2CB3A68A0089A799 /* Editor */,
 				738B5CDA2CB3A68A0089A799 /* Products */,
+				7314740B2CB4CB7B00DC5A45 /* .swift-version */,
+				7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */,
+				731474102CB4CD2A00DC5A45 /* .swiftformat */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +84,8 @@
 				738B5CD52CB3A68A0089A799 /* Sources */,
 				738B5CD62CB3A68A0089A799 /* Frameworks */,
 				738B5CD72CB3A68A0089A799 /* Resources */,
+				734156FD2CB4C75C00C6EBF7 /* SwiftFormat */,
+				734156F32CB4C40E00C6EBF7 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -84,6 +97,7 @@
 			name = Editor;
 			packageProductDependencies = (
 				73E32F082CB3AA3F002B21C5 /* SwiftUIX */,
+				731474032CB4C8FE00DC5A45 /* SwiftFormat */,
 			);
 			productName = Editor;
 			productReference = 738B5CD92CB3A68A0089A799 /* Editor.app */;
@@ -109,12 +123,13 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 738B5CD02CB3A68A0089A799;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				73E32F072CB3AA3F002B21C5 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
+				731474022CB4C8FE00DC5A45 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
+				731474052CB4CA3000DC5A45 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 738B5CDA2CB3A68A0089A799 /* Products */;
@@ -131,10 +146,54 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7314740F2CB4CCBB00DC5A45 /* .swiftlint.yml in Resources */,
+				7314740D2CB4CB7C00DC5A45 /* .swift-version in Resources */,
+				731474112CB4CD2B00DC5A45 /* .swiftformat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		734156F32CB4C40E00C6EBF7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --fix && swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+		};
+		734156FD2CB4C75C00C6EBF7 /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftformat > /dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		738B5CD52CB3A68A0089A799 /* Sources */ = {
@@ -184,7 +243,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -247,7 +306,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -274,7 +333,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Editor/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Editor/Previews\"";
 				DEVELOPMENT_TEAM = 55RQQG4L55;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -286,7 +345,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.Editor;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.editor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -302,7 +361,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Editor/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Editor/Previews\"";
 				DEVELOPMENT_TEAM = 55RQQG4L55;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -314,7 +373,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.Editor;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.editor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -345,6 +404,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		731474022CB4C8FE00DC5A45 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.5;
+			};
+		};
+		731474052CB4CA3000DC5A45 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.57.0;
+			};
+		};
 		73E32F072CB3AA3F002B21C5 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
@@ -356,6 +431,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		731474032CB4C8FE00DC5A45 /* SwiftFormat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 731474022CB4C8FE00DC5A45 /* XCRemoteSwiftPackageReference "SwiftFormat" */;
+			productName = SwiftFormat;
+		};
 		73E32F082CB3AA3F002B21C5 /* SwiftUIX */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 73E32F072CB3AA3F002B21C5 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
