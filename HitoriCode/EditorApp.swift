@@ -9,7 +9,7 @@
 //  https://github.com/krisamin
 //
 //  Created : 10/7/24
-//  Package : Editor
+//  Package : HitoriCode
 //  File    : EditorApp.swift
 //
 
@@ -35,7 +35,7 @@ struct EditorApp: App {
                 .containerBackground(for: .window) {
                     ZStack {
                         VisualEffectView()
-                        Color.white.opacity(0.5)
+                        Color.white.opacity(0.4)
                     }
                 }
         }

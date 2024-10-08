@@ -18,26 +18,26 @@
 		7314740B2CB4CB7B00DC5A45 /* .swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
 		7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		731474102CB4CD2A00DC5A45 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
-		738B5CD92CB3A68A0089A799 /* Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Editor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		738B5CD92CB3A68A0089A799 /* HitoriCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitoriCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		739D95592CB3C92F00156A3C /* Exceptions for "Editor" folder in "Editor" target */ = {
+		739D95592CB3C92F00156A3C /* Exceptions for "HitoriCode" folder in "HitoriCode" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 738B5CD82CB3A68A0089A799 /* Editor */;
+			target = 738B5CD82CB3A68A0089A799 /* HitoriCode */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		738B5CDB2CB3A68A0089A799 /* Editor */ = {
+		738B5CDB2CB3A68A0089A799 /* HitoriCode */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				739D95592CB3C92F00156A3C /* Exceptions for "Editor" folder in "Editor" target */,
+				739D95592CB3C92F00156A3C /* Exceptions for "HitoriCode" folder in "HitoriCode" target */,
 			);
-			path = Editor;
+			path = HitoriCode;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -58,7 +58,7 @@
 		738B5CD02CB3A68A0089A799 = {
 			isa = PBXGroup;
 			children = (
-				738B5CDB2CB3A68A0089A799 /* Editor */,
+				738B5CDB2CB3A68A0089A799 /* HitoriCode */,
 				738B5CDA2CB3A68A0089A799 /* Products */,
 				7314740B2CB4CB7B00DC5A45 /* .swift-version */,
 				7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */,
@@ -69,7 +69,7 @@
 		738B5CDA2CB3A68A0089A799 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				738B5CD92CB3A68A0089A799 /* Editor.app */,
+				738B5CD92CB3A68A0089A799 /* HitoriCode.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -77,9 +77,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		738B5CD82CB3A68A0089A799 /* Editor */ = {
+		738B5CD82CB3A68A0089A799 /* HitoriCode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 738B5CE82CB3A68B0089A799 /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildConfigurationList = 738B5CE82CB3A68B0089A799 /* Build configuration list for PBXNativeTarget "HitoriCode" */;
 			buildPhases = (
 				738B5CD52CB3A68A0089A799 /* Sources */,
 				738B5CD62CB3A68A0089A799 /* Frameworks */,
@@ -92,15 +92,15 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				738B5CDB2CB3A68A0089A799 /* Editor */,
+				738B5CDB2CB3A68A0089A799 /* HitoriCode */,
 			);
-			name = Editor;
+			name = HitoriCode;
 			packageProductDependencies = (
 				73E32F082CB3AA3F002B21C5 /* SwiftUIX */,
 				731474032CB4C8FE00DC5A45 /* SwiftFormat */,
 			);
-			productName = Editor;
-			productReference = 738B5CD92CB3A68A0089A799 /* Editor.app */;
+			productName = HitoriCode;
+			productReference = 738B5CD92CB3A68A0089A799 /* HitoriCode.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -118,7 +118,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 738B5CD42CB3A68A0089A799 /* Build configuration list for PBXProject "Editor" */;
+			buildConfigurationList = 738B5CD42CB3A68A0089A799 /* Build configuration list for PBXProject "HitoriCode" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -136,7 +136,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				738B5CD82CB3A68A0089A799 /* Editor */,
+				738B5CD82CB3A68A0089A799 /* HitoriCode */,
 			);
 		};
 /* End PBXProject section */
@@ -329,23 +329,25 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Editor/Editor.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HitoriCode/HitoriCode.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Editor/Previews\"";
+				DEVELOPMENT_ASSET_PATHS = "\"HitoriCode/Previews\"";
 				DEVELOPMENT_TEAM = 55RQQG4L55;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Editor/Info.plist;
+				INFOPLIST_FILE = HitoriCode/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HitoriCode;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.editor;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.hitoricode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -357,23 +359,25 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Editor/Editor.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HitoriCode/HitoriCode.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Editor/Previews\"";
+				DEVELOPMENT_ASSET_PATHS = "\"HitoriCode/Previews\"";
 				DEVELOPMENT_TEAM = 55RQQG4L55;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Editor/Info.plist;
+				INFOPLIST_FILE = HitoriCode/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HitoriCode;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.editor;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.hitoricode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -383,7 +387,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		738B5CD42CB3A68A0089A799 /* Build configuration list for PBXProject "Editor" */ = {
+		738B5CD42CB3A68A0089A799 /* Build configuration list for PBXProject "HitoriCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				738B5CE62CB3A68B0089A799 /* Debug */,
@@ -392,7 +396,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		738B5CE82CB3A68B0089A799 /* Build configuration list for PBXNativeTarget "Editor" */ = {
+		738B5CE82CB3A68B0089A799 /* Build configuration list for PBXNativeTarget "HitoriCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				738B5CE92CB3A68B0089A799 /* Debug */,

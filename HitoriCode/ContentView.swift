@@ -9,7 +9,7 @@
 //  https://github.com/krisamin
 //
 //  Created : 10/7/24
-//  Package : Editor
+//  Package : HitoriCode
 //  File    : ContentView.swift
 //
 
@@ -119,16 +119,10 @@ struct CodeEditorView: NSViewRepresentable {
         )
 
         let keywords = [
-            ("칸나", NSColor(red: 55 / 255, green: 53 / 255, blue: 132 / 255, alpha: 1)),
-            ("유니", NSColor(red: 183 / 255, green: 125 / 255, blue: 228 / 255, alpha: 1)),
-            ("히나", NSColor(red: 242 / 255, green: 220 / 255, blue: 191 / 255, alpha: 1)),
-            ("마시로", NSColor(red: 159 / 255, green: 62 / 255, blue: 65 / 255, alpha: 1)),
-            ("리제", NSColor(red: 151 / 255, green: 27 / 255, blue: 47 / 255, alpha: 1)),
-            ("타비", NSColor(red: 154 / 255, green: 218 / 255, blue: 255 / 255, alpha: 1)),
-            ("시부키", NSColor(red: 194 / 255, green: 175 / 255, blue: 230 / 255, alpha: 1)),
-            ("린", NSColor(red: 43 / 255, green: 102 / 255, blue: 192 / 255, alpha: 1)),
-            ("나나", NSColor(red: 223 / 255, green: 118 / 255, blue: 133 / 255, alpha: 1)),
-            ("리코", NSColor(red: 166 / 255, green: 208 / 255, blue: 166 / 255, alpha: 1))
+            ("hitori", NSColor(red: 237 / 255, green: 184 / 255, blue: 197 / 255, alpha: 1)),
+            ("nijika", NSColor(red: 231 / 255, green: 212 / 255, blue: 124 / 255, alpha: 1)),
+            ("ryo", NSColor(red: 64 / 255, green: 97 / 255, blue: 161 / 255, alpha: 1)),
+            ("kita", NSColor(red: 210 / 255, green: 86 / 255, blue: 78 / 255, alpha: 1))
         ]
 
         for (keyword, color) in keywords {
