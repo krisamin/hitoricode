@@ -7,37 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		731474042CB4C8FE00DC5A45 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 731474032CB4C8FE00DC5A45 /* SwiftFormat */; };
-		7314740D2CB4CB7C00DC5A45 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 7314740B2CB4CB7B00DC5A45 /* .swift-version */; };
-		7314740F2CB4CCBB00DC5A45 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */; };
-		731474112CB4CD2B00DC5A45 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = 731474102CB4CD2A00DC5A45 /* .swiftformat */; };
-		73C2CD5B2CB4FB4C00C608BC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 73C2CD5A2CB4FB4900C608BC /* README.md */; };
-		73E32F092CB3AA3F002B21C5 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 73E32F082CB3AA3F002B21C5 /* SwiftUIX */; };
+		73F7C3372CB5538000D24700 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 73F7C3352CB5538000D24700 /* .swiftlint.yml */; };
+		73F7C3382CB5538000D24700 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 73F7C3362CB5538000D24700 /* README.md */; };
+		73F7C3392CB5538000D24700 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = 73F7C3342CB5538000D24700 /* .swiftformat */; };
+		73F7C33A2CB5538000D24700 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 73F7C3332CB5538000D24700 /* .swift-version */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7314740B2CB4CB7B00DC5A45 /* .swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
-		7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		731474102CB4CD2A00DC5A45 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
-		738B5CD92CB3A68A0089A799 /* HitoriCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitoriCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		73C2CD5A2CB4FB4900C608BC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		73F7C2E62CB552C300D24700 /* HitoriCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitoriCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73F7C3332CB5538000D24700 /* .swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
+		73F7C3342CB5538000D24700 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
+		73F7C3352CB5538000D24700 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		73F7C3362CB5538000D24700 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		739D95592CB3C92F00156A3C /* Exceptions for "HitoriCode" folder in "HitoriCode" target */ = {
+		733C0E1D2CB570B800F5F924 /* Exceptions for "HitoriCode" folder in "HitoriCode" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
 			);
-			target = 738B5CD82CB3A68A0089A799 /* HitoriCode */;
+			target = 73F7C2E52CB552C300D24700 /* HitoriCode */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		738B5CDB2CB3A68A0089A799 /* HitoriCode */ = {
+		73F7C2E82CB552C300D24700 /* HitoriCode */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				739D95592CB3C92F00156A3C /* Exceptions for "HitoriCode" folder in "HitoriCode" target */,
+				733C0E1D2CB570B800F5F924 /* Exceptions for "HitoriCode" folder in "HitoriCode" target */,
 			);
 			path = HitoriCode;
 			sourceTree = "<group>";
@@ -45,34 +43,32 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		738B5CD62CB3A68A0089A799 /* Frameworks */ = {
+		73F7C2E32CB552C300D24700 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73E32F092CB3AA3F002B21C5 /* SwiftUIX in Frameworks */,
-				731474042CB4C8FE00DC5A45 /* SwiftFormat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		738B5CD02CB3A68A0089A799 = {
+		73F7C2DD2CB552C300D24700 = {
 			isa = PBXGroup;
 			children = (
-				738B5CDB2CB3A68A0089A799 /* HitoriCode */,
-				738B5CDA2CB3A68A0089A799 /* Products */,
-				7314740B2CB4CB7B00DC5A45 /* .swift-version */,
-				731474102CB4CD2A00DC5A45 /* .swiftformat */,
-				7314740E2CB4CCBA00DC5A45 /* .swiftlint.yml */,
-				73C2CD5A2CB4FB4900C608BC /* README.md */,
+				73F7C2E82CB552C300D24700 /* HitoriCode */,
+				73F7C3332CB5538000D24700 /* .swift-version */,
+				73F7C3342CB5538000D24700 /* .swiftformat */,
+				73F7C3352CB5538000D24700 /* .swiftlint.yml */,
+				73F7C3362CB5538000D24700 /* README.md */,
+				73F7C2E72CB552C300D24700 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		738B5CDA2CB3A68A0089A799 /* Products */ = {
+		73F7C2E72CB552C300D24700 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				738B5CD92CB3A68A0089A799 /* HitoriCode.app */,
+				73F7C2E62CB552C300D24700 /* HitoriCode.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,86 +76,103 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		738B5CD82CB3A68A0089A799 /* HitoriCode */ = {
+		73F7C2E52CB552C300D24700 /* HitoriCode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 738B5CE82CB3A68B0089A799 /* Build configuration list for PBXNativeTarget "HitoriCode" */;
+			buildConfigurationList = 73F7C2F52CB552C400D24700 /* Build configuration list for PBXNativeTarget "HitoriCode" */;
 			buildPhases = (
-				738B5CD52CB3A68A0089A799 /* Sources */,
-				738B5CD62CB3A68A0089A799 /* Frameworks */,
-				738B5CD72CB3A68A0089A799 /* Resources */,
-				734156FD2CB4C75C00C6EBF7 /* SwiftFormat */,
-				734156F32CB4C40E00C6EBF7 /* SwiftLint */,
+				73F7C2E22CB552C300D24700 /* Sources */,
+				73F7C2E32CB552C300D24700 /* Frameworks */,
+				73F7C2E42CB552C300D24700 /* Resources */,
+				733C0E162CB56FBE00F5F924 /* SwiftFormat */,
+				733C0E172CB56FC600F5F924 /* SwiftLint */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				738B5CDB2CB3A68A0089A799 /* HitoriCode */,
+				73F7C2E82CB552C300D24700 /* HitoriCode */,
 			);
 			name = HitoriCode;
 			packageProductDependencies = (
-				73E32F082CB3AA3F002B21C5 /* SwiftUIX */,
-				731474032CB4C8FE00DC5A45 /* SwiftFormat */,
 			);
 			productName = HitoriCode;
-			productReference = 738B5CD92CB3A68A0089A799 /* HitoriCode.app */;
+			productReference = 73F7C2E62CB552C300D24700 /* HitoriCode.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		738B5CD12CB3A68A0089A799 /* Project object */ = {
+		73F7C2DE2CB552C300D24700 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					738B5CD82CB3A68A0089A799 = {
+					73F7C2E52CB552C300D24700 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
-			buildConfigurationList = 738B5CD42CB3A68A0089A799 /* Build configuration list for PBXProject "HitoriCode" */;
+			buildConfigurationList = 73F7C2E12CB552C300D24700 /* Build configuration list for PBXProject "HitoriCode" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
-			mainGroup = 738B5CD02CB3A68A0089A799;
+			mainGroup = 73F7C2DD2CB552C300D24700;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				73E32F072CB3AA3F002B21C5 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
-				731474022CB4C8FE00DC5A45 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
-				731474052CB4CA3000DC5A45 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				733C0E142CB56F8400F5F924 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				733C0E152CB56F8B00F5F924 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 738B5CDA2CB3A68A0089A799 /* Products */;
+			productRefGroup = 73F7C2E72CB552C300D24700 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				738B5CD82CB3A68A0089A799 /* HitoriCode */,
+				73F7C2E52CB552C300D24700 /* HitoriCode */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		738B5CD72CB3A68A0089A799 /* Resources */ = {
+		73F7C2E42CB552C300D24700 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7314740F2CB4CCBB00DC5A45 /* .swiftlint.yml in Resources */,
-				7314740D2CB4CB7C00DC5A45 /* .swift-version in Resources */,
-				731474112CB4CD2B00DC5A45 /* .swiftformat in Resources */,
-				73C2CD5B2CB4FB4C00C608BC /* README.md in Resources */,
+				73F7C3372CB5538000D24700 /* .swiftlint.yml in Resources */,
+				73F7C3382CB5538000D24700 /* README.md in Resources */,
+				73F7C3392CB5538000D24700 /* .swiftformat in Resources */,
+				73F7C33A2CB5538000D24700 /* .swift-version in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		734156F32CB4C40E00C6EBF7 /* SwiftLint */ = {
+		733C0E162CB56FBE00F5F924 /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftformat > /dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+		733C0E172CB56FC600F5F924 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -178,29 +191,10 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --fix && swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
 		};
-		734156FD2CB4C75C00C6EBF7 /* SwiftFormat */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftFormat;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftformat > /dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		738B5CD52CB3A68A0089A799 /* Sources */ = {
+		73F7C2E22CB552C300D24700 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -210,7 +204,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		738B5CE62CB3A68B0089A799 /* Debug */ = {
+		73F7C2F32CB552C400D24700 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -273,7 +267,7 @@
 			};
 			name = Debug;
 		};
-		738B5CE72CB3A68B0089A799 /* Release */ = {
+		73F7C2F42CB552C400D24700 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -328,7 +322,7 @@
 			};
 			name = Release;
 		};
-		738B5CE92CB3A68B0089A799 /* Debug */ = {
+		73F7C2F62CB552C400D24700 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -337,28 +331,25 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"HitoriCode/Previews\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 55RQQG4L55;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HitoriCode/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = HitoriCode;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.hitoricode;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.HitoriCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		738B5CEA2CB3A68B0089A799 /* Release */ = {
+		73F7C2F72CB552C400D24700 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -367,21 +358,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"HitoriCode/Previews\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 55RQQG4L55;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HitoriCode/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = HitoriCode;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.hitoricode;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.isamin.HitoriCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -391,20 +379,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		738B5CD42CB3A68A0089A799 /* Build configuration list for PBXProject "HitoriCode" */ = {
+		73F7C2E12CB552C300D24700 /* Build configuration list for PBXProject "HitoriCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				738B5CE62CB3A68B0089A799 /* Debug */,
-				738B5CE72CB3A68B0089A799 /* Release */,
+				73F7C2F32CB552C400D24700 /* Debug */,
+				73F7C2F42CB552C400D24700 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		738B5CE82CB3A68B0089A799 /* Build configuration list for PBXNativeTarget "HitoriCode" */ = {
+		73F7C2F52CB552C400D24700 /* Build configuration list for PBXNativeTarget "HitoriCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				738B5CE92CB3A68B0089A799 /* Debug */,
-				738B5CEA2CB3A68B0089A799 /* Release */,
+				73F7C2F62CB552C400D24700 /* Debug */,
+				73F7C2F72CB552C400D24700 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -412,15 +400,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		731474022CB4C8FE00DC5A45 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.54.5;
-			};
-		};
-		731474052CB4CA3000DC5A45 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+		733C0E142CB56F8400F5F924 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
 			requirement = {
@@ -428,28 +408,15 @@
 				minimumVersion = 0.57.0;
 			};
 		};
-		73E32F072CB3AA3F002B21C5 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+		733C0E152CB56F8B00F5F924 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
+			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.3;
+				minimumVersion = 0.54.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		731474032CB4C8FE00DC5A45 /* SwiftFormat */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 731474022CB4C8FE00DC5A45 /* XCRemoteSwiftPackageReference "SwiftFormat" */;
-			productName = SwiftFormat;
-		};
-		73E32F082CB3AA3F002B21C5 /* SwiftUIX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 73E32F072CB3AA3F002B21C5 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
-			productName = SwiftUIX;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 738B5CD12CB3A68A0089A799 /* Project object */;
+	rootObject = 73F7C2DE2CB552C300D24700 /* Project object */;
 }

@@ -30,6 +30,12 @@ struct WorkspaceView: View {
                 }
             }
         }
+        .onAppear(
+            perform: {
+                setupLSP()
+            }
+        )
+        .frame(minWidth: 400, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
     }
 
     private func setupLSP() {

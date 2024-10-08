@@ -26,6 +26,20 @@ struct LandingView: View {
                 openWindow(id: "welcome")
                 dismissWindow(id: "landing")
             }
+
+            Button("새 창 열기") {
+                let newWindow = NSWindow(contentRect: NSRect(x: 100, y: 100, width: 300, height: 200),
+                                         styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                                         backing: .buffered,
+                                         defer: false)
+                newWindow.styleMask.remove(.titled)
+                newWindow.styleMask.insert(.fullSizeContentView)
+                newWindow.titlebarAppearsTransparent = true
+                newWindow.titleVisibility = .hidden
+                newWindow.isMovableByWindowBackground = true
+                newWindow.contentView = NSHostingView(rootView: WelcomeView())
+                newWindow.makeKeyAndOrderFront(nil)
+            }
         }
     }
 }
@@ -33,3 +47,5 @@ struct LandingView: View {
 #Preview {
     LandingView()
 }
+
+import Cocoa
