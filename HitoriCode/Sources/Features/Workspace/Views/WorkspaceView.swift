@@ -36,6 +36,7 @@ struct WorkspaceView: View {
             }
         )
         .frame(minWidth: 400, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
+        .background(Color("Background"))
     }
 
     private func setupLSP() {
@@ -67,7 +68,7 @@ struct CodeEditorView: NSViewRepresentable {
         textView.typingAttributes = [
             .font: font,
             .ligature: false,
-            .foregroundColor: NSColor.black
+            .foregroundColor: NSColor.white
         ]
 
         textView.delegate = context.coordinator
@@ -117,7 +118,7 @@ struct CodeEditorView: NSViewRepresentable {
             [
                 .font: font,
                 .ligature: false,
-                .foregroundColor: NSColor.black
+                .foregroundColor: NSColor.white
             ],
             range: fullRange
         )

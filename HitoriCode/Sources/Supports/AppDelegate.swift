@@ -18,38 +18,9 @@ import SwiftUI
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_: Notification) {
-        let window = CustomWindow(
-            contentRect: .init(origin: .zero, size: CGSize(width: 800, height: 800)),
-            styleMask: [.fullSizeContentView, .resizable],
-            backing: .buffered,
-            defer: false
-        )
+        let window = CustomWindow()
 
-        let hostingView = NSHostingView(rootView: WorkspaceView())
-
-        window.contentView = hostingView
-        window.isOpaque = false
-//        window.backgroundColor = NSColor(calibratedHue: 0, saturation: 0, brightness: 1, alpha: 0.5)
-        window.isMovableByWindowBackground = true
-        window.center()
-
-        if let contentView = window.contentView {
-            contentView.wantsLayer = true
-            contentView.layer?.cornerRadius = 10
-            contentView.layer?.masksToBounds = true
-            contentView.layer?.backgroundColor = NSColor(
-                calibratedHue: 0,
-                saturation: 0,
-                brightness: 1,
-                alpha: 0.5
-            ).cgColor
-
-            // 아마 여기서 CiFilter 쓸 수 있을거임 ㅋ
-        }
-
-        let windowController = NSWindowController()
-        windowController.contentViewController = window.contentViewController
-        windowController.window = window
+        let windowController = NSWindowController(window: window)
         windowController.showWindow(nil)
     }
 
@@ -60,12 +31,83 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
-class CustomWindow: NSWindow {
-    override var canBecomeKey: Bool {
-        true
+class CustomWindow: NSWindow, NSWindowDelegate {
+    init(
+        contentRect: NSRect = NSRect(x: 0, y: 0, width: 800, height: 800)
+    ) {
+        super.init(
+            contentRect: contentRect,
+            styleMask: [.fullSizeContentView, .resizable, .titled, .closable, .miniaturizable],
+            backing: .buffered,
+            defer: false
+        )
+        delegate = self
+
+        setupWindowProperties()
+        setupWindowContent()
     }
 
-    override var canBecomeMain: Bool {
-        true
+    func windowDidBecomeKey(_: Notification) {
+        print("focused")
+    }
+
+    func windowDidResignKey(_: Notification) {
+        print("unfocused")
+    }
+
+    private func setupWindowProperties() {
+        isOpaque = false
+        backgroundColor = NSColor(calibratedWhite: 0, alpha: 0)
+        isMovableByWindowBackground = true
+        titlebarAppearsTransparent = true
+        title = "HitoriCode"
+        appearance = nil // NSAppearance(named: .vibrantDark)
+        center()
+    }
+
+    private func setupWindowContent() {
+        guard let contentView else { return }
+
+        setupContentViewLayer(contentView)
+        setupBlurView(contentView)
+        setupHostingView(contentView)
+    }
+
+    private func setupContentViewLayer(_ contentView: NSView) {
+        contentView.wantsLayer = true
+        if let layer = contentView.layer {
+            layer.cornerRadius = 10
+            layer.masksToBounds = true
+            layer.backgroundColor = NSColor.clear.cgColor
+        }
+    }
+
+    private func setupBlurView(_ contentView: NSView) {
+        let blurView = NSVisualEffectView()
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.material = .fullScreenUI
+        blurView.blendingMode = .behindWindow
+        blurView.state = .active
+        contentView.addSubview(blurView)
+
+        NSLayoutConstraint.activate([
+            blurView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            blurView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            blurView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    }
+
+    private func setupHostingView(_ contentView: NSView) {
+        let hostingView = NSHostingView(rootView: WorkspaceView())
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(hostingView)
+
+        NSLayoutConstraint.activate([
+            hostingView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            hostingView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            hostingView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            hostingView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
 }
