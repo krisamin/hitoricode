@@ -1,1 +1,1 @@
-cd ./HitoriCode/Sources && bun lint-staged
+bun lint-staged

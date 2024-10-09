@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky",
+    "stage": "git add .",
     "commit": "cz"
   },
   "devDependencies": {
