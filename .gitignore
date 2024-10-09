@@ -1,2 +1,7 @@
 # modules
 node_modules
+
+# xcuserdata
+HitoriCode.xcodeproj/xcuserdata
+HitoriCode.xcodeproj/project.xcworkspace/xcuserdata
+*.xcuserdatad
