@@ -15,6 +15,7 @@
 
 import SwiftUI
 
+/// 윈도우 스타일
 class HitoriWindowStyle {
     let contentRect: NSRect
     let styleMask: NSWindow.StyleMask
@@ -25,11 +26,13 @@ class HitoriWindowStyle {
     }
 }
 
+/// 윈도우 타입
 enum HitoriWindowType {
     case landing
     case welcome
     case workspace
 
+    /// 윈도우 타입에 맞는 스타일 반환
     func getWindowStyle() -> HitoriWindowStyle {
         switch self {
         case .landing:
@@ -139,10 +142,10 @@ class HitoriMenu {
     }
 }
 
+/// 윈도우 클래스
 class HitoriWindow: NSWindow, NSWindowDelegate {
-    @ObservedObject var windowManager: HitoriWindowManager
     @ObservedObject var appConfig: HitoriAppConfig
-
+    @ObservedObject var windowManager: HitoriWindowManager
     let windowType: HitoriWindowType
 
     init(
@@ -241,5 +244,9 @@ class HitoriWindow: NSWindow, NSWindowDelegate {
             hostingView.topAnchor.constraint(equalTo: contentView.topAnchor),
             hostingView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+
+    public func closeByManager() {
+        windowManager.closeWindow(window: self)
     }
 }

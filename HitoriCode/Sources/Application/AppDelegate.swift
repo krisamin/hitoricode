@@ -18,9 +18,7 @@ import SwiftUI
 class AppDelegate: NSObject, NSApplicationDelegate {
     let windowManager = HitoriWindowManager()
 
-    func applicationDidFinishLaunching(_: Notification) {
-        windowManager.createWorkspaceWindow()
-    }
+    func applicationDidFinishLaunching(_: Notification) {}
 
     func applicationWillTerminate(_: Notification) {}
 
