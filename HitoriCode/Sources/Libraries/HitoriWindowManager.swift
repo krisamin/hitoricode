@@ -18,6 +18,8 @@ import SwiftUI
 
 class HitoriWindowManager: ObservableObject {
     @Published var controllers: [NSWindowController] = []
+    @Published var currentFocusedType: HitoriWindowType?
+
     let appConfig = HitoriAppConfig()
 
     var controllersSink: AnyCancellable?
