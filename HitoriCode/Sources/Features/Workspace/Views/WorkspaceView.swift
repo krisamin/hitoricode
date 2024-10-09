@@ -18,15 +18,24 @@ import Foundation
 import SwiftUI
 
 struct WorkspaceView: View {
+    @ObservedObject var appConfig: HitoriAppConfig
     @State private var editorContent = ""
     @State private var lsp: LanguageServerInteraction?
 
     var body: some View {
         VStack {
             CodeEditorView(text: $editorContent)
+            VStack {
+                ForEach(appConfig.recentItems, id: \.self) { item in
+                    Text(item)
+                }
+            }
             HStack {
                 Button("Start LSP") {
                     startLSPServer()
+                }
+                Button("Add Recent") {
+                    appConfig.addRecentItem("Item - \(Date().timeIntervalSince1970)")
                 }
             }
         }
@@ -265,7 +274,7 @@ enum LSPRequests {
     }
 }
 
-#Preview {
-    WorkspaceView()
-        .frame(width: 600, height: 600)
-}
+// #Preview {
+//    WorkspaceView()
+//        .frame(width: 600, height: 600)
+// }

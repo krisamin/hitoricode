@@ -8,33 +8,21 @@
 //  https://isamin.kr
 //  https://github.com/krisamin
 //
-//  Created : 10/8/24
+//  Created : 10/9/24
 //  Package : HitoriCode
-//  File    : AppDelegate.swift
+//  File    : HitoriWindow.swift
 //
 
-import Cocoa
 import SwiftUI
 
-class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationDidFinishLaunching(_: Notification) {
-        let window = CustomWindow()
+class HitoriWindow: NSWindow, NSWindowDelegate {
+    @ObservedObject var appConfig: HitoriAppConfig
 
-        let windowController = NSWindowController(window: window)
-        windowController.showWindow(nil)
-    }
-
-    func applicationWillTerminate(_: Notification) {}
-
-    func applicationSupportsSecureRestorableState(_: NSApplication) -> Bool {
-        true
-    }
-}
-
-class CustomWindow: NSWindow, NSWindowDelegate {
     init(
+        _ appConfig: HitoriAppConfig,
         contentRect: NSRect = NSRect(x: 0, y: 0, width: 800, height: 800)
     ) {
+        self.appConfig = appConfig
         super.init(
             contentRect: contentRect,
             styleMask: [.fullSizeContentView, .resizable, .titled, .closable, .miniaturizable],
@@ -99,7 +87,7 @@ class CustomWindow: NSWindow, NSWindowDelegate {
     }
 
     private func setupHostingView(_ contentView: NSView) {
-        let hostingView = NSHostingView(rootView: WorkspaceView())
+        let hostingView = NSHostingView(rootView: WorkspaceView(appConfig: appConfig))
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(hostingView)
 

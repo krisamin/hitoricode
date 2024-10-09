@@ -10,20 +10,21 @@
 //
 //  Created : 10/8/24
 //  Package : HitoriCode
-//  File    : WelcomeView.swift
+//  File    : AppDelegate.swift
 //
 
 import SwiftUI
 
-struct WelcomeView: View {
-    var body: some View {
-        VStack {
-            Text("Welcome! HitoriCode")
-            Button("Open") {}
-        }
-    }
-}
+class AppDelegate: NSObject, NSApplicationDelegate {
+    let windowManager = HitoriWindowManager()
 
-#Preview {
-    WelcomeView()
+    func applicationDidFinishLaunching(_: Notification) {
+        windowManager.createWindow()
+    }
+
+    func applicationWillTerminate(_: Notification) {}
+
+    func applicationSupportsSecureRestorableState(_: NSApplication) -> Bool {
+        true
+    }
 }

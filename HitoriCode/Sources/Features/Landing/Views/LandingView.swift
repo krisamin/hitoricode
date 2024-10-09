@@ -16,16 +16,10 @@
 import SwiftUI
 
 struct LandingView: View {
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
-
     var body: some View {
         VStack {
             Text("Welcome! this is the landing view.")
-            Button("Start") {
-                openWindow(id: "welcome")
-                dismissWindow(id: "landing")
-            }
+            Button("Start") {}
 
             Button("새 창 열기") {
                 let newWindow = NSWindow(contentRect: NSRect(x: 100, y: 100, width: 300, height: 200),
