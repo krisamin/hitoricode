@@ -21,6 +21,8 @@ struct WelcomeView: View {
             Text("Welcome! HitoriCode")
             Button("Open") {}
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("Background"))
     }
 }
 

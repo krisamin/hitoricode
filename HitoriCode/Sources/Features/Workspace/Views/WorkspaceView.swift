@@ -76,7 +76,7 @@ struct CodeEditorView: NSViewRepresentable {
         let font = NSFont(name: "goorm Sans Code 400", size: 20)!
         textView.typingAttributes = [
             .font: font,
-            .ligature: false,
+            .ligature: true,
             .foregroundColor: NSColor.white
         ]
 
@@ -126,7 +126,7 @@ struct CodeEditorView: NSViewRepresentable {
         attributedString.addAttributes(
             [
                 .font: font,
-                .ligature: false,
+                .ligature: true,
                 .foregroundColor: NSColor.white
             ],
             range: fullRange

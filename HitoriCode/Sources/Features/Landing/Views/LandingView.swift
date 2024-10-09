@@ -35,6 +35,8 @@ struct LandingView: View {
                 newWindow.makeKeyAndOrderFront(nil)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("Background"))
     }
 }
 

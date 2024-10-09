@@ -33,11 +33,28 @@ class HitoriWindowManager: ObservableObject {
     private func willUpdateWindows() {
         print("check windows")
     }
+    
+    public func createLandingWindow() {
+        self.createWindow(windowType: .landing)
+    }
+    
+    public func createWelcomeWindow() {
+        self.createWindow(windowType: .welcome)
+    }
+    
+    public func createWorkspaceWindow() {
+        self.createWindow(windowType: .workspace)
+    }
 
-    public func createWindow() {
-        let window = HitoriWindow(appConfig)
+    private func createWindow(windowType: HitoriWindowType) {
+        let window = HitoriWindow(appConfig, windowType)
         let controller = NSWindowController(window: window)
         controllers.append(controller)
         controller.showWindow(nil)
     }
+}
+
+class HitoriWorkspaceConfig: ObservableObject {
+    @Published var openFolder: String? = nil
+    @Published var openFile: String? = nil
 }

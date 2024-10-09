@@ -15,17 +15,58 @@
 
 import SwiftUI
 
+class HitoriWindowStyle {
+    let contentRect: NSRect
+    let styleMask: NSWindow.StyleMask
+
+    init(contentRect: NSRect, styleMask: NSWindow.StyleMask) {
+        self.contentRect = contentRect
+        self.styleMask = styleMask
+    }
+}
+
+enum HitoriWindowType {
+    case landing
+    case welcome
+    case workspace
+
+    func getWindowStyle() -> HitoriWindowStyle {
+        switch self {
+        case .landing:
+            HitoriWindowStyle(
+                contentRect: NSRect(x: 0, y: 0, width: 400, height: 400),
+                styleMask: [.fullSizeContentView]
+            )
+        case .welcome:
+            HitoriWindowStyle(
+                contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
+                styleMask: [.fullSizeContentView]
+            )
+        case .workspace:
+            HitoriWindowStyle(
+                contentRect: NSRect(x: 0, y: 0, width: 1200, height: 800),
+                styleMask: [.fullSizeContentView, .titled, .resizable, .closable, .miniaturizable]
+            )
+        }
+    }
+}
+
 class HitoriWindow: NSWindow, NSWindowDelegate {
     @ObservedObject var appConfig: HitoriAppConfig
 
+    let windowType: HitoriWindowType
+
     init(
         _ appConfig: HitoriAppConfig,
-        contentRect: NSRect = NSRect(x: 0, y: 0, width: 800, height: 800)
+        _ windowType: HitoriWindowType
     ) {
         self.appConfig = appConfig
+        self.windowType = windowType
+        let windowStyle = windowType.getWindowStyle()
+
         super.init(
-            contentRect: contentRect,
-            styleMask: [.fullSizeContentView, .resizable, .titled, .closable, .miniaturizable],
+            contentRect: windowStyle.contentRect,
+            styleMask: windowStyle.styleMask,
             backing: .buffered,
             defer: false
         )
@@ -87,7 +128,15 @@ class HitoriWindow: NSWindow, NSWindowDelegate {
     }
 
     private func setupHostingView(_ contentView: NSView) {
-        let hostingView = NSHostingView(rootView: WorkspaceView(appConfig: appConfig))
+        let hostingView = switch windowType {
+        case .landing:
+            NSHostingView(rootView: LandingView())
+        case .welcome:
+            NSHostingView(rootView: WelcomeView())
+        case .workspace:
+            NSHostingView(rootView: WorkspaceView(appConfig: appConfig))
+        }
+
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(hostingView)
 
