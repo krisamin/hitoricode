@@ -1,9 +1,18 @@
 {
   "name": "hitoricode",
+  "type": "module",
   "private": true,
+  "scripts": {
+    "prepare": "husky",
+    "commit": "cz"
+  },
   "devDependencies": {
+    "chalk": "^5.3.0",
     "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "readline-sync": "^1.4.10"
   },
   "config": {
     "commitizen": {
