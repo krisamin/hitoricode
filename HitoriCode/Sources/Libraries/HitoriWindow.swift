@@ -52,16 +52,20 @@ enum HitoriWindowType {
 }
 
 class HitoriWindow: NSWindow, NSWindowDelegate {
+    @ObservedObject var windowManager: HitoriWindowManager
     @ObservedObject var appConfig: HitoriAppConfig
 
     let windowType: HitoriWindowType
 
     init(
         _ appConfig: HitoriAppConfig,
-        _ windowType: HitoriWindowType
+        _ windowType: HitoriWindowType,
+        _ windowManager: HitoriWindowManager
     ) {
         self.appConfig = appConfig
         self.windowType = windowType
+        self.windowManager = windowManager
+
         let windowStyle = windowType.getWindowStyle()
 
         super.init(
@@ -77,11 +81,11 @@ class HitoriWindow: NSWindow, NSWindowDelegate {
     }
 
     func windowDidBecomeKey(_: Notification) {
-        print("focused")
+        print("focused \(windowType)")
     }
 
     func windowDidResignKey(_: Notification) {
-        print("unfocused")
+        print("unfocused \(windowType)")
     }
 
     private func setupWindowProperties() {
@@ -134,7 +138,7 @@ class HitoriWindow: NSWindow, NSWindowDelegate {
         case .welcome:
             NSHostingView(rootView: WelcomeView())
         case .workspace:
-            NSHostingView(rootView: WorkspaceView(appConfig: appConfig))
+            NSHostingView(rootView: WorkspaceView(windowManager: windowManager, appConfig: appConfig, window: self))
         }
 
         hostingView.translatesAutoresizingMaskIntoConstraints = false

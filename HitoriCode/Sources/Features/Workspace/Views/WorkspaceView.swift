@@ -18,7 +18,11 @@ import Foundation
 import SwiftUI
 
 struct WorkspaceView: View {
+    @ObservedObject var windowManager: HitoriWindowManager
     @ObservedObject var appConfig: HitoriAppConfig
+
+    var window: HitoriWindow
+
     @State private var editorContent = ""
     @State private var lsp: LanguageServerInteraction?
 
@@ -36,6 +40,9 @@ struct WorkspaceView: View {
                 }
                 Button("Add Recent") {
                     appConfig.addRecentItem("Item - \(Date().timeIntervalSince1970)")
+                }
+                Button("Close Window") {
+                    windowManager.closeWindow(window: window)
                 }
             }
         }

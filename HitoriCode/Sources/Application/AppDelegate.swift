@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let windowManager = HitoriWindowManager()
 
     func applicationDidFinishLaunching(_: Notification) {
-        windowManager.createWindow(windowType: .welcome)
+        windowManager.createWorkspaceWindow()
     }
 
     func applicationWillTerminate(_: Notification) {}

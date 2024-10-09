@@ -58,7 +58,7 @@ class HitoriAppConfig: ObservableObject {
     private func willUpdateRecentItems() {
         print("check recentItems")
     }
-    
+
     private func willUpdateLaunchWindow() {
         print("chekc launchWindow")
     }
