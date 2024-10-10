@@ -16,32 +16,20 @@
 import SwiftUI
 
 struct LandingView: View {
+    @ObservedObject var appConfig: HitoriAppConfig
+    @ObservedObject var windowManager: HitoriWindowManager
+    var window: HitoriWindow
+
     var body: some View {
         VStack {
             Text("Welcome! this is the landing view.")
             Button("Start") {}
-
-            Button("새 창 열기") {
-                let newWindow = NSWindow(contentRect: NSRect(x: 100, y: 100, width: 300, height: 200),
-                                         styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                                         backing: .buffered,
-                                         defer: false)
-                newWindow.styleMask.remove(.titled)
-                newWindow.styleMask.insert(.fullSizeContentView)
-                newWindow.titlebarAppearsTransparent = true
-                newWindow.titleVisibility = .hidden
-                newWindow.isMovableByWindowBackground = true
-                newWindow.contentView = NSHostingView(rootView: WelcomeView())
-                newWindow.makeKeyAndOrderFront(nil)
+            Button("Finish") {
+                windowManager.newWindow()
+                window.close()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("Background"))
     }
 }
-
-#Preview {
-    LandingView()
-}
-
-import Cocoa

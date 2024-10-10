@@ -8,25 +8,21 @@
 //  https://isamin.kr
 //  https://github.com/krisamin
 //
-//  Created : 10/8/24
+//  Created : 10/10/24
 //  Package : HitoriCode
-//  File    : WelcomeView.swift
+//  File    : SettingsView.swift
 //
 
 import SwiftUI
 
-struct WelcomeView: View {
+struct SettingsView: View {
     @ObservedObject var appConfig: HitoriAppConfig
     @ObservedObject var windowManager: HitoriWindowManager
     var window: HitoriWindow
 
     var body: some View {
         VStack {
-            Text("Welcome! HitoriCode")
-            Button("Open") {
-                windowManager.openWorkspace()
-                window.close()
-            }
+            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("Background"))

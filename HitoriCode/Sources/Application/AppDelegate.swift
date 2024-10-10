@@ -18,7 +18,18 @@ import SwiftUI
 class AppDelegate: NSObject, NSApplicationDelegate {
     let windowManager = HitoriWindowManager()
 
-    func applicationDidFinishLaunching(_: Notification) {}
+    func applicationDidFinishLaunching(_: Notification) {
+        windowManager.newStart()
+    }
+
+    func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !flag {
+            windowManager.newStart()
+        }
+        return true
+    }
+
+    func applicationDidBecomeActive(_: Notification) {}
 
     func applicationWillTerminate(_: Notification) {}
 

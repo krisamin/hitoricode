@@ -15,14 +15,48 @@
 
 import SwiftUI
 
+enum HitoriWindowTrafficLight {
+    case close, minimize, zoom
+}
+
 /// 윈도우 스타일
 class HitoriWindowStyle {
     let contentRect: NSRect
     let styleMask: NSWindow.StyleMask
+    let trafficLights: [HitoriWindowTrafficLight]
+    let title: String
+    let showTitle: Bool
+    let primary: Bool
+    let solo: Bool
 
-    init(contentRect: NSRect, styleMask: NSWindow.StyleMask) {
+    init(
+        contentRect: NSRect,
+        trafficLights: [HitoriWindowTrafficLight] = [],
+        title: String = "",
+        showTitle: Bool = false,
+        primary: Bool = false,
+        solo: Bool = false
+    ) {
         self.contentRect = contentRect
+        self.trafficLights = trafficLights
+        var styleMask: NSWindow.StyleMask = [.fullSizeContentView]
+        if trafficLights.count != 0 {
+            styleMask.insert(.titled)
+        }
+        if trafficLights.contains(.close) {
+            styleMask.insert(.closable)
+        }
+        if trafficLights.contains(.minimize) {
+            styleMask.insert(.miniaturizable)
+        }
+        if trafficLights.contains(.zoom) {
+            styleMask.insert(.resizable)
+        }
         self.styleMask = styleMask
+        self.title = title
+        self.showTitle = showTitle
+        self.primary = primary
+        self.solo = solo
     }
 }
 
@@ -31,6 +65,8 @@ enum HitoriWindowType {
     case landing
     case welcome
     case workspace
+    case settings
+    case about
 
     /// 윈도우 타입에 맞는 스타일 반환
     func getWindowStyle() -> HitoriWindowStyle {
@@ -38,115 +74,45 @@ enum HitoriWindowType {
         case .landing:
             HitoriWindowStyle(
                 contentRect: NSRect(x: 0, y: 0, width: 400, height: 400),
-                styleMask: [.fullSizeContentView]
+                primary: true
             )
         case .welcome:
             HitoriWindowStyle(
                 contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-                styleMask: [.fullSizeContentView]
+                trafficLights: [.close]
             )
         case .workspace:
             HitoriWindowStyle(
                 contentRect: NSRect(x: 0, y: 0, width: 1200, height: 800),
-                styleMask: [.fullSizeContentView, .titled, .resizable, .closable, .miniaturizable]
+                trafficLights: [.close, .minimize, .zoom],
+                title: "HitoriCode",
+                showTitle: true,
+                primary: true
             )
-        }
-    }
-}
-
-class HitoriMenu {
-    private static func getDefaultMenu() -> NSMenu {
-        let appMenu = NSHostingMenu(rootView: Menu("HitoriCode") {
-            Button("About HitoriCode") {}
-            Button("Preferences...") {}
-            Divider()
-            Button("Hide HitoriCode") {
-                NSApplication.shared.hide(nil)
-            }.keyboardShortcut("h")
-            Button("Hide Others") {
-                NSApplication.shared.hideOtherApplications(nil)
-            }.keyboardShortcut("h", modifiers: [.command, .option])
-            Divider()
-            Button("Quit HitoriCode") {
-                NSApplication.shared.terminate(nil)
-            }.keyboardShortcut("q")
-        })
-
-        return appMenu
-    }
-
-    private static func getFileMenuItem() -> NSMenuItem {
-        let fileMenuItem = NSMenuItem(title: "File", action: nil, keyEquivalent: "")
-        fileMenuItem.submenu = NSHostingMenu(rootView: Group {
-            Button("New File") {}
-            Button("New Folder") {}
-            Divider()
-            Button("Open File...") {}
-            Button("Open Folder...") {}
-        })
-
-        return fileMenuItem
-    }
-
-    private static func getEditMenuItem() -> NSMenuItem {
-        let editMenuItem = NSMenuItem(title: "Edit", action: nil, keyEquivalent: "")
-        editMenuItem.submenu = NSHostingMenu(rootView: Group {
-            Button("Undo") {}
-            Button("Redo") {}
-            Divider()
-            Button("Cut") {}
-            Button("Copy") {}
-            Button("Paste") {}
-            Button("Select All") {}
-        })
-
-        return editMenuItem
-    }
-
-    private static func getDebugMenuItem() -> NSMenuItem {
-        let debugMenuItem = NSMenuItem(title: "Debug", action: nil, keyEquivalent: "")
-        debugMenuItem.submenu = NSHostingMenu(rootView: Group {
-            Button("Debuuuuuuuuuuug...") {}
-        })
-
-        return debugMenuItem
-    }
-
-    private static func applyDefaultMenu() {
-        NSApp.mainMenu = getDefaultMenu()
-    }
-
-    private static func setMenuItem(_ menuItem: NSMenuItem) {
-        let menuItemTitle = menuItem.title
-        let existingMenuItem = NSApp.mainMenu?.item(withTitle: menuItemTitle)
-
-        if existingMenuItem == nil {
-            NSApp.mainMenu?.addItem(menuItem)
-        } else {
-            existingMenuItem?.submenu = menuItem.submenu
-        }
-    }
-
-    public static func applyMenu(_ windowType: HitoriWindowType) {
-        HitoriMenu.applyDefaultMenu()
-        switch windowType {
-        case .welcome:
-            HitoriMenu.setMenuItem(HitoriMenu.getDebugMenuItem())
-        case .workspace:
-            HitoriMenu.setMenuItem(HitoriMenu.getFileMenuItem())
-            HitoriMenu.setMenuItem(HitoriMenu.getEditMenuItem())
-            HitoriMenu.setMenuItem(HitoriMenu.getDebugMenuItem())
-        default:
-            break
+        case .settings:
+            HitoriWindowStyle(
+                contentRect: NSRect(x: 0, y: 0, width: 800, height: 400),
+                trafficLights: [.close],
+                title: "Settings",
+                showTitle: true,
+                solo: true
+            )
+        case .about:
+            HitoriWindowStyle(
+                contentRect: NSRect(x: 0, y: 0, width: 300, height: 200),
+                trafficLights: [.close],
+                solo: true
+            )
         }
     }
 }
 
 /// 윈도우 클래스
-class HitoriWindow: NSWindow, NSWindowDelegate {
+class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
     @ObservedObject var appConfig: HitoriAppConfig
     @ObservedObject var windowManager: HitoriWindowManager
     let windowType: HitoriWindowType
+    let windowStyle: HitoriWindowStyle
 
     init(
         _ appConfig: HitoriAppConfig,
@@ -156,8 +122,7 @@ class HitoriWindow: NSWindow, NSWindowDelegate {
         self.appConfig = appConfig
         self.windowType = windowType
         self.windowManager = windowManager
-
-        let windowStyle = windowType.getWindowStyle()
+        windowStyle = windowType.getWindowStyle()
 
         super.init(
             contentRect: windowStyle.contentRect,
@@ -171,23 +136,50 @@ class HitoriWindow: NSWindow, NSWindowDelegate {
         setupWindowContent()
     }
 
+    override var canBecomeKey: Bool {
+        true
+    }
+
+    override var canBecomeMain: Bool {
+        true
+    }
+
     func windowDidBecomeKey(_: Notification) {
-        print("focused \(windowType)")
+        print("[HitoriWindow] focus - \(windowType)")
         windowManager.currentFocusedType = windowType
         HitoriMenu.applyMenu(windowType)
     }
 
     func windowDidResignKey(_: Notification) {
-        print("unfocused \(windowType)")
+        print("[HitoriWindow] unfocus - \(windowType)")
         windowManager.currentFocusedType = nil
     }
 
     private func setupWindowProperties() {
+        standardWindowButton(.closeButton)?.isHidden
+            = !windowStyle.trafficLights.contains(.close)
+        standardWindowButton(.miniaturizeButton)?.isHidden
+            = !windowStyle.trafficLights.contains(.minimize)
+        standardWindowButton(.zoomButton)?.isHidden
+            = !windowStyle.trafficLights.contains(.zoom)
+
+        title = windowStyle.title
+        titlebarAppearsTransparent = true
+
+        if windowStyle.primary {
+            collectionBehavior = .primary
+        }
+
+        if windowStyle.showTitle {
+            titleVisibility = .visible
+            isMovableByWindowBackground = false
+        } else {
+            titleVisibility = .hidden
+            isMovableByWindowBackground = true
+        }
+
         isOpaque = false
         backgroundColor = NSColor(calibratedWhite: 0, alpha: 0)
-        isMovableByWindowBackground = true
-        titlebarAppearsTransparent = true
-        title = "HitoriCode"
         appearance = nil // NSAppearance(named: .vibrantDark)
         center()
     }
@@ -228,13 +220,38 @@ class HitoriWindow: NSWindow, NSWindowDelegate {
     private func setupHostingView(_ contentView: NSView) {
         let hostingView = switch windowType {
         case .landing:
-            NSHostingView(rootView: LandingView())
+            NSHostingView(rootView: LandingView(
+                appConfig: appConfig,
+                windowManager: windowManager,
+                window: self
+            ))
         case .welcome:
-            NSHostingView(rootView: WelcomeView())
+            NSHostingView(rootView: WelcomeView(
+                appConfig: appConfig,
+                windowManager: windowManager,
+                window: self
+            ))
         case .workspace:
-            NSHostingView(rootView: WorkspaceView(windowManager: windowManager, appConfig: appConfig, window: self))
+            NSHostingView(
+                rootView: WorkspaceView(
+                    appConfig: appConfig,
+                    windowManager: windowManager,
+                    window: self
+                )
+            )
+        case .settings:
+            NSHostingView(rootView: SettingsView(
+                appConfig: appConfig,
+                windowManager: windowManager,
+                window: self
+            ))
+        case .about:
+            NSHostingView(rootView: AboutView(
+                appConfig: appConfig,
+                windowManager: windowManager,
+                window: self
+            ))
         }
-
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(hostingView)
 
@@ -246,7 +263,8 @@ class HitoriWindow: NSWindow, NSWindowDelegate {
         ])
     }
 
-    public func closeByManager() {
-        windowManager.closeWindow(window: self)
+    func windowWillClose(_: Notification) {
+        print("[HitoriWindow] will close - \(windowType)")
+        windowManager.removeWindow(self)
     }
 }

@@ -18,8 +18,8 @@ import Foundation
 import SwiftUI
 
 struct WorkspaceView: View {
-    @ObservedObject var windowManager: HitoriWindowManager
     @ObservedObject var appConfig: HitoriAppConfig
+    @ObservedObject var windowManager: HitoriWindowManager
     var window: HitoriWindow
 
     @State private var editorContent = ""
@@ -37,11 +37,20 @@ struct WorkspaceView: View {
                 Button("Start LSP") {
                     startLSPServer()
                 }
+                Button("Open Settings") {
+                    windowManager.openSettings()
+                }
+                Button("Open About") {
+                    windowManager.openAbout()
+                }
+                Button("New Window") {
+                    windowManager.newWindow()
+                }
                 Button("Add Recent") {
                     appConfig.addRecentItem("Item - \(Date().timeIntervalSince1970)")
                 }
                 Button("Close Window") {
-                    window.closeByManager()
+                    window.close()
                 }
             }
         }
@@ -279,8 +288,3 @@ enum LSPRequests {
         """
     }
 }
-
-// #Preview {
-//    WorkspaceView()
-//        .frame(width: 600, height: 600)
-// }
