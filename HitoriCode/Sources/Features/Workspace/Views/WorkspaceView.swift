@@ -18,7 +18,7 @@ import Foundation
 import SwiftUI
 
 struct WorkspaceView: View {
-    @ObservedObject var appConfig = HitoriAppConfig.shared
+    @ObservedObject var config = HitoriConfig.shared
     @ObservedObject var windowManager = HitoriWindowManager.shared
     @EnvironmentObject var window: HitoriWindow
 
@@ -26,31 +26,33 @@ struct WorkspaceView: View {
     @State private var lsp: LanguageServerInteraction?
 
     var body: some View {
-        VStack {
-            CodeEditorView(text: $editorContent)
+        BackgroundView {
             VStack {
-                ForEach(appConfig.recentItems, id: \.self) { item in
-                    Text(item)
+                CodeEditorView(text: $editorContent)
+                VStack {
+                    ForEach(config.recentItems, id: \.self) { item in
+                        Text(item)
+                    }
                 }
-            }
-            HStack {
-                Button("Start LSP") {
-                    startLSPServer()
-                }
-                Button("Open Settings") {
-                    windowManager.openSettings()
-                }
-                Button("Open About") {
-                    windowManager.openAbout()
-                }
-                Button("New Window") {
-                    windowManager.newWindow()
-                }
-                Button("Add Recent") {
-                    appConfig.addRecentItem("Item - \(Date().timeIntervalSince1970)")
-                }
-                Button("Close Window") {
-                    window.close()
+                HStack {
+                    Button("Start LSP") {
+                        startLSPServer()
+                    }
+                    Button("Open Settings") {
+                        windowManager.openSettings()
+                    }
+                    Button("Open About") {
+                        windowManager.openAbout()
+                    }
+                    Button("New Window") {
+                        windowManager.newWindow()
+                    }
+                    Button("Add Recent") {
+                        config.addRecentItem("Item - \(Date().timeIntervalSince1970)")
+                    }
+                    Button("Close Window") {
+                        window.close()
+                    }
                 }
             }
         }
@@ -59,8 +61,6 @@ struct WorkspaceView: View {
                 setupLSP()
             }
         )
-        .frame(minWidth: 400, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
-        .background(Color("Background"))
     }
 
     private func setupLSP() {

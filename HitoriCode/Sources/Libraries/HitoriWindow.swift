@@ -16,130 +16,14 @@
 import Combine
 import SwiftUI
 
-enum HitoriWindowTrafficLight {
-    case close, minimize, zoom
-}
-
-/// 윈도우 스타일
-class HitoriWindowStyle {
-    let contentRect: NSRect
-    let styleMask: NSWindow.StyleMask
-    let trafficLights: [HitoriWindowTrafficLight]
-    let title: String
-    let showTitle: Bool
-    let primary: Bool
-    let solo: Bool
-
-    init(
-        contentRect: NSRect,
-        trafficLights: [HitoriWindowTrafficLight] = [],
-        title: String = "",
-        showTitle: Bool = false,
-        primary: Bool = false,
-        solo: Bool = false
-    ) {
-        self.contentRect = contentRect
-        self.trafficLights = trafficLights
-        var styleMask: NSWindow.StyleMask = [.fullSizeContentView]
-        if trafficLights.count != 0 {
-            styleMask.insert(.titled)
-        }
-        if trafficLights.contains(.close) {
-            styleMask.insert(.closable)
-        }
-        if trafficLights.contains(.minimize) {
-            styleMask.insert(.miniaturizable)
-        }
-        if trafficLights.contains(.zoom) {
-            styleMask.insert(.resizable)
-        }
-        self.styleMask = styleMask
-        self.title = title
-        self.showTitle = showTitle
-        self.primary = primary
-        self.solo = solo
-    }
-}
-
-/// 윈도우 타입
-enum HitoriWindowType {
-    case landing
-    case welcome
-    case workspace
-    case settings
-    case about
-
-    /// 윈도우 타입에 맞는 스타일 반환
-    func getWindowStyle() -> HitoriWindowStyle {
-        switch self {
-        case .landing:
-            HitoriWindowStyle(
-                contentRect: NSRect(x: 0, y: 0, width: 400, height: 400),
-                primary: true
-            )
-        case .welcome:
-            HitoriWindowStyle(
-                contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-                trafficLights: [.close]
-            )
-        case .workspace:
-            HitoriWindowStyle(
-                contentRect: NSRect(x: 0, y: 0, width: 1200, height: 800),
-                trafficLights: [.close, .minimize, .zoom],
-                title: "HitoriCode",
-                showTitle: true,
-                primary: true
-            )
-        case .settings:
-            HitoriWindowStyle(
-                contentRect: NSRect(x: 0, y: 0, width: 800, height: 400),
-                trafficLights: [.close],
-                title: "Settings",
-                showTitle: true,
-                solo: true
-            )
-        case .about:
-            HitoriWindowStyle(
-                contentRect: NSRect(x: 0, y: 0, width: 300, height: 200),
-                trafficLights: [.close],
-                solo: true
-            )
-        }
-    }
-}
-
-class HitoriWindowController: NSWindowController {
-    init(window: HitoriWindow) {
-        print("[HitoriWindowController] init")
-        super.init(window: window)
-    }
-
-    deinit {
-        print("[HitoriWindowController] deinit")
-    }
-
-    var hitoriWindow: HitoriWindow? {
-        window as? HitoriWindow
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-protocol HitoriWindowProtocol: NSWindow {
-    var windowType: HitoriWindowType { get }
-}
-
 /// 윈도우 클래스
-class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject, HitoriWindowProtocol {
-    @ObservedObject var appConfig = HitoriAppConfig.shared
+class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
+    @ObservedObject var config = HitoriConfig.shared
     @ObservedObject var windowManager = HitoriWindowManager.shared
     let windowType: HitoriWindowType
     let windowStyle: HitoriWindowStyle
 
-    var appConfigThemeSink: AnyCancellable?
+    var configThemeSink: AnyCancellable?
 
     init(
         _ windowType: HitoriWindowType
@@ -159,7 +43,7 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject, HitoriWindowPr
         setupWindowProperties()
         setupWindowContent()
 
-        appConfigThemeSink = appConfig.$theme.sink { self.setTheme($0) }
+        configThemeSink = config.$theme.sink { self.setTheme($0) }
     }
 
     deinit {
@@ -175,7 +59,7 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject, HitoriWindowPr
     }
 
     private func setTheme(_ theme: HitoriTheme) {
-        switch theme {
+        switch theme.getBaseTheme() {
         case .system:
             appearance = nil
         case .dark:
@@ -218,7 +102,7 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject, HitoriWindowPr
         guard let contentView else { return }
 
         setupContentViewLayer(contentView)
-        setupBlurView(contentView)
+//        setupBlurView(contentView)
         setupHostingView(contentView)
     }
 
@@ -277,8 +161,8 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject, HitoriWindowPr
         contentView?.subviews.forEach { $0.removeFromSuperview() }
         contentView = nil
 
-        appConfigThemeSink?.cancel()
-        appConfigThemeSink = nil
+        configThemeSink?.cancel()
+        configThemeSink = nil
 
         windowManager.removeWindowController(self)
     }

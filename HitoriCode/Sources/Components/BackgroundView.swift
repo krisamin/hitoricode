@@ -8,26 +8,24 @@
 //  https://isamin.kr
 //  https://github.com/krisamin
 //
-//  Created : 10/8/24
+//  Created : 10/10/24
 //  Package : HitoriCode
-//  File    : WelcomeView.swift
+//  File    : BackgroundView.swift
 //
 
 import SwiftUI
 
-struct WelcomeView: View {
-    @ObservedObject var windowManager = HitoriWindowManager.shared
-    @EnvironmentObject var window: HitoriWindow
+struct BackgroundView<Content: View>: View {
+    @ObservedObject var config = HitoriConfig.shared
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
-        BackgroundView {
-            VStack {
-                Text("Welcome! HitoriCode")
-                Button("Open") {
-                    windowManager.openWorkspace()
-                    window.close()
-                }
-            }
+        ZStack {
+            Color(config.theme.getBackgroundName())
+                .ignoresSafeArea()
+            content()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.ultraThinMaterial)
     }
 }

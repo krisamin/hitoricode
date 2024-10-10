@@ -10,21 +10,51 @@
 //
 //  Created : 10/9/24
 //  Package : HitoriCode
-//  File    : HitoriAppConfig.swift
+//  File    : HitoriConfig.swift
 //
 
 import Combine
 
+enum HitoriBaseTheme {
+    case system, dark, light
+}
+
 enum HitoriTheme {
-    case light, dark, system
+    case system, dark, light, hitori, nijika, ryo, kita
+
+    func getBaseTheme() -> HitoriBaseTheme {
+        switch self {
+        case .system:
+            .system
+        case .dark, .kita, .ryo:
+            .dark
+        case .light, .hitori, .nijika:
+            .light
+        }
+    }
+
+    func getBackgroundName() -> String {
+        switch self {
+        case .system, .light, .dark:
+            "Background"
+        case .hitori:
+            "BackgroundHitori"
+        case .nijika:
+            "BackgroundNijika"
+        case .ryo:
+            "BackgroundRyo"
+        case .kita:
+            "BackgroundKita"
+        }
+    }
 }
 
 enum HitoriLaunchWindow {
     case welcome, workspace
 }
 
-class HitoriAppConfig: ObservableObject {
-    static let shared = HitoriAppConfig()
+class HitoriConfig: ObservableObject {
+    static let shared = HitoriConfig()
 
     @Published var firstLaunch: Bool = true
     @Published var theme: HitoriTheme = .system

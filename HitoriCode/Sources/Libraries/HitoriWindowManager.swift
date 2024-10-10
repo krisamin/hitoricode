@@ -21,7 +21,7 @@ class HitoriWindowManager: ObservableObject {
     static let shared = HitoriWindowManager()
 
     @Published var windowControllers: [HitoriWindowController] = []
-    let appConfig = HitoriAppConfig.shared
+    let config = HitoriConfig.shared
 
     var windowControllersSink: AnyCancellable?
 
@@ -60,7 +60,7 @@ class HitoriWindowManager: ObservableObject {
     }
 
     public func newWindow() {
-        switch appConfig.launchWindow {
+        switch config.launchWindow {
         case .welcome:
             createWindow(.welcome)
         case .workspace:

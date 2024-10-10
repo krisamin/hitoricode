@@ -17,11 +17,11 @@ import SwiftUI
 
 struct LandingView: View {
     var body: some View {
-        VStack {
-            LandingWelcomeScreen()
+        BackgroundView {
+            VStack {
+                LandingWelcomeScreen()
+            }
+            .padding()
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("Background"))
     }
 }
