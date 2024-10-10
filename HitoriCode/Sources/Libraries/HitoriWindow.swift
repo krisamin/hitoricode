@@ -13,6 +13,7 @@
 //  File    : HitoriWindow.swift
 //
 
+import Combine
 import SwiftUI
 
 enum HitoriWindowTrafficLight {
@@ -107,23 +108,46 @@ enum HitoriWindowType {
     }
 }
 
+class HitoriWindowController: NSWindowController {
+    init(window: HitoriWindow) {
+        print("[HitoriWindowController] init")
+        super.init(window: window)
+    }
+
+    deinit {
+        print("[HitoriWindowController] deinit")
+    }
+
+    var hitoriWindow: HitoriWindow? {
+        window as? HitoriWindow
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+protocol HitoriWindowProtocol: NSWindow {
+    var windowType: HitoriWindowType { get }
+}
+
 /// 윈도우 클래스
-class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
-    @ObservedObject var appConfig: HitoriAppConfig
-    @ObservedObject var windowManager: HitoriWindowManager
+class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject, HitoriWindowProtocol {
+    @ObservedObject var appConfig = HitoriAppConfig.shared
+    @ObservedObject var windowManager = HitoriWindowManager.shared
     let windowType: HitoriWindowType
     let windowStyle: HitoriWindowStyle
 
-    init(
-        _ appConfig: HitoriAppConfig,
-        _ windowType: HitoriWindowType,
-        _ windowManager: HitoriWindowManager
-    ) {
-        self.appConfig = appConfig
-        self.windowType = windowType
-        self.windowManager = windowManager
-        windowStyle = windowType.getWindowStyle()
+    var appConfigThemeSink: AnyCancellable?
 
+    init(
+        _ windowType: HitoriWindowType
+    ) {
+        print("[HitoriWindow] init - \(windowType)")
+
+        self.windowType = windowType
+        windowStyle = windowType.getWindowStyle()
         super.init(
             contentRect: windowStyle.contentRect,
             styleMask: windowStyle.styleMask,
@@ -134,6 +158,12 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
 
         setupWindowProperties()
         setupWindowContent()
+
+        appConfigThemeSink = appConfig.$theme.sink { self.setTheme($0) }
+    }
+
+    deinit {
+        print("[HitoriWindow] deinit - \(windowType)")
     }
 
     override var canBecomeKey: Bool {
@@ -144,15 +174,15 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
         true
     }
 
-    func windowDidBecomeKey(_: Notification) {
-        print("[HitoriWindow] focus - \(windowType)")
-        windowManager.currentFocusedType = windowType
-        HitoriMenu.applyMenu(windowType)
-    }
-
-    func windowDidResignKey(_: Notification) {
-        print("[HitoriWindow] unfocus - \(windowType)")
-        windowManager.currentFocusedType = nil
+    private func setTheme(_ theme: HitoriTheme) {
+        switch theme {
+        case .system:
+            appearance = nil
+        case .dark:
+            appearance = NSAppearance(named: .darkAqua)
+        case .light:
+            appearance = NSAppearance(named: .aqua)
+        }
     }
 
     private func setupWindowProperties() {
@@ -220,37 +250,15 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
     private func setupHostingView(_ contentView: NSView) {
         let hostingView = switch windowType {
         case .landing:
-            NSHostingView(rootView: LandingView(
-                appConfig: appConfig,
-                windowManager: windowManager,
-                window: self
-            ))
+            NSHostingView(rootView: LandingView().environmentObject(self))
         case .welcome:
-            NSHostingView(rootView: WelcomeView(
-                appConfig: appConfig,
-                windowManager: windowManager,
-                window: self
-            ))
+            NSHostingView(rootView: WelcomeView().environmentObject(self))
         case .workspace:
-            NSHostingView(
-                rootView: WorkspaceView(
-                    appConfig: appConfig,
-                    windowManager: windowManager,
-                    window: self
-                )
-            )
+            NSHostingView(rootView: WorkspaceView().environmentObject(self))
         case .settings:
-            NSHostingView(rootView: SettingsView(
-                appConfig: appConfig,
-                windowManager: windowManager,
-                window: self
-            ))
+            NSHostingView(rootView: SettingsView().environmentObject(self))
         case .about:
-            NSHostingView(rootView: AboutView(
-                appConfig: appConfig,
-                windowManager: windowManager,
-                window: self
-            ))
+            NSHostingView(rootView: AboutView().environmentObject(self))
         }
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(hostingView)
@@ -265,6 +273,13 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
 
     func windowWillClose(_: Notification) {
         print("[HitoriWindow] will close - \(windowType)")
-        windowManager.removeWindow(self)
+
+        contentView?.subviews.forEach { $0.removeFromSuperview() }
+        contentView = nil
+
+        appConfigThemeSink?.cancel()
+        appConfigThemeSink = nil
+
+        windowManager.removeWindowController(self)
     }
 }

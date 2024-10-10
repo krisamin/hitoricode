@@ -18,34 +18,36 @@ import SwiftUI
 
 /// 어플리케이션의 윈도우 관리를 담당하는 클래스
 class HitoriWindowManager: ObservableObject {
-    @Published var windows: [HitoriWindow]
-    @Published var currentFocusedType: HitoriWindowType?
-    let appConfig = HitoriAppConfig()
+    static let shared = HitoriWindowManager()
 
-    var controllersSink: AnyCancellable?
+    @Published var windowControllers: [HitoriWindowController] = []
+    let appConfig = HitoriAppConfig.shared
+
+    var windowControllersSink: AnyCancellable?
 
     init() {
-        windows = []
+        print("[HitoriWindowManager] init")
 
-        controllersSink = $windows.sink { windows in
-            self.willUpdateWindows(windows)
+        windowControllersSink = $windowControllers.sink { windowControllers in
+            self.willUpdateWindowControllers(windowControllers)
         }
     }
 
-    private func willUpdateWindows(_ windows: [HitoriWindow]) {
-        print("[HitoriWindowManager] count - \(self.windows.count) -> \(windows.count)")
+    private func willUpdateWindowControllers(_ windowControllers: [HitoriWindowController]) {
+        print("[HitoriWindowManager] count - \(self.windowControllers.count) -> \(windowControllers.count)")
     }
 
     private func createWindow(_ windowType: HitoriWindowType) {
         print("[HitoriWindowManager] create - \(windowType)")
-        let window = HitoriWindow(appConfig, windowType, self)
-        windows.append(window)
-        window.makeKeyAndOrderFront(nil)
+        let window = HitoriWindow(windowType)
+        let windowController = HitoriWindowController(window: window)
+        windowControllers.append(windowController)
+        windowController.showWindow(nil)
     }
 
     private func createWindowWithCheck(_ windowType: HitoriWindowType) {
-        if let window = windows.first(where: { $0.windowType == windowType }) {
-            window.makeKeyAndOrderFront(nil)
+        if let controller = windowControllers.first(where: { $0.hitoriWindow?.windowType == windowType }) {
+            controller.showWindow(nil)
         } else {
             createWindow(windowType)
         }
@@ -54,7 +56,7 @@ class HitoriWindowManager: ObservableObject {
     public func newStart() {
         // TODO: 처음 실행인지 -> createWindow .landing, 아닌 경우 -> newWindow
         createWindow(.landing)
-        // newWindow()
+//         newWindow()
     }
 
     public func newWindow() {
@@ -78,9 +80,10 @@ class HitoriWindowManager: ObservableObject {
         createWindowWithCheck(.about)
     }
 
-    public func removeWindow(_ window: HitoriWindow) {
+    public func removeWindowController(_ window: HitoriWindow) {
         print("[HitoriWindowManager] remove - \(window.windowType)")
-        windows.removeAll { $0 == window }
+        window.windowController = nil
+        windowControllers.removeAll { $0.window === window }
     }
 }
 

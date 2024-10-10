@@ -16,9 +16,8 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @ObservedObject var appConfig: HitoriAppConfig
-    @ObservedObject var windowManager: HitoriWindowManager
-    var window: HitoriWindow
+    @ObservedObject var windowManager = HitoriWindowManager.shared
+    @EnvironmentObject var window: HitoriWindow
 
     var body: some View {
         VStack {

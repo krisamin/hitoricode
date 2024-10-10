@@ -16,19 +16,11 @@
 import SwiftUI
 
 struct LandingView: View {
-    @ObservedObject var appConfig: HitoriAppConfig
-    @ObservedObject var windowManager: HitoriWindowManager
-    var window: HitoriWindow
-
     var body: some View {
         VStack {
-            Text("Welcome! this is the landing view.")
-            Button("Start") {}
-            Button("Finish") {
-                windowManager.newWindow()
-                window.close()
-            }
+            LandingWelcomeScreen()
         }
+        .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("Background"))
     }

@@ -18,9 +18,9 @@ import Foundation
 import SwiftUI
 
 struct WorkspaceView: View {
-    @ObservedObject var appConfig: HitoriAppConfig
-    @ObservedObject var windowManager: HitoriWindowManager
-    var window: HitoriWindow
+    @ObservedObject var appConfig = HitoriAppConfig.shared
+    @ObservedObject var windowManager = HitoriWindowManager.shared
+    @EnvironmentObject var window: HitoriWindow
 
     @State private var editorContent = ""
     @State private var lsp: LanguageServerInteraction?
