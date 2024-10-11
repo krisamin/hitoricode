@@ -62,11 +62,7 @@ class HitoriWindowStyle {
 
 /// 윈도우 타입
 enum HitoriWindowType {
-    case landing
-    case welcome
-    case workspace
-    case settings
-    case about
+    case landing, welcome, workspace, settings, about
 
     /// 윈도우 타입에 맞는 스타일 반환
     func getWindowStyle() -> HitoriWindowStyle {
@@ -103,6 +99,17 @@ enum HitoriWindowType {
                 trafficLights: [.close],
                 solo: true
             )
+        }
+    }
+
+    func getMenuType() -> HitoriMenuType {
+        switch self {
+        case .landing, .settings, .about:
+            .none
+        case .welcome:
+            .welcome
+        case .workspace:
+            .workspace
         }
     }
 }

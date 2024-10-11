@@ -20,6 +20,7 @@ import SwiftUI
 class HitoriWindowManager: ObservableObject {
     static let shared = HitoriWindowManager()
 
+    @Published var currentWindow: HitoriWindow?
     @Published var windowControllers: [HitoriWindowController] = []
     let config = HitoriConfig.shared
 
@@ -78,6 +79,10 @@ class HitoriWindowManager: ObservableObject {
 
     public func openAbout() {
         createWindowWithCheck(.about)
+    }
+
+    public func setWindow(_ window: HitoriWindow?) {
+        currentWindow = window
     }
 
     public func removeWindowController(_ window: HitoriWindow) {

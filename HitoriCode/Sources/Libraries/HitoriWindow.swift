@@ -94,7 +94,7 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
 
         isOpaque = false
         backgroundColor = NSColor(calibratedWhite: 0, alpha: 0)
-        appearance = nil // NSAppearance(named: .vibrantDark)
+        setTheme(config.theme)
         center()
     }
 
@@ -153,6 +153,16 @@ class HitoriWindow: NSWindow, NSWindowDelegate, ObservableObject {
             hostingView.topAnchor.constraint(equalTo: contentView.topAnchor),
             hostingView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+
+    func windowDidBecomeKey(_: Notification) {
+        windowManager.setWindow(self)
+        NSApplication.shared.menu = HitoriMenu(windowType.getMenuType())
+    }
+
+    func windowDidResignKey(_: Notification) {
+        windowManager.setWindow(nil)
+        NSApplication.shared.menu = HitoriMenu(.none)
     }
 
     func windowWillClose(_: Notification) {

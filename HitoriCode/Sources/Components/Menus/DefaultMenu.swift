@@ -8,32 +8,33 @@
 //  https://isamin.kr
 //  https://github.com/krisamin
 //
-//  Created : 10/10/24
+//  Created : 10/11/24
 //  Package : HitoriCode
-//  File    : LandingFinishScreen.swift
+//  File    : DefaultMenu.swift
 //
 
 import SwiftUI
 
-struct LandingFinishScreen: View {
+struct DefaultMenu: View {
     @ObservedObject private var windowManager = HitoriWindowManager.shared
-    @EnvironmentObject private var window: HitoriWindow
 
     var body: some View {
-        NavigationStack {
-            Spacer()
-            Text("Your Workspace is Ready!")
-                .font(.largeTitle)
-            Text("Let's get started")
-                .font(.title2)
-            Spacer()
-            HStack {
-                Button("Finish") {
-                    windowManager.newWindow()
-                    window.close()
-                }
-                .buttonStyle(.borderedProminent)
-            }
+        Button("About HitoriCode") {
+            windowManager.openAbout()
         }
+        Button("Settings...") {
+            windowManager.openSettings()
+        }.keyboardShortcut(",")
+        Divider()
+        Button("Hide HitoriCode") {
+            NSApplication.shared.hide(nil)
+        }.keyboardShortcut("h")
+        Button("Hide Others") {
+            NSApplication.shared.hideOtherApplications(nil)
+        }.keyboardShortcut("h", modifiers: [.command, .option])
+        Divider()
+        Button("Quit HitoriCode") {
+            NSApplication.shared.terminate(nil)
+        }.keyboardShortcut("q")
     }
 }

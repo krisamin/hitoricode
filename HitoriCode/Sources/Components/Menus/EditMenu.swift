@@ -8,32 +8,27 @@
 //  https://isamin.kr
 //  https://github.com/krisamin
 //
-//  Created : 10/10/24
+//  Created : 10/11/24
 //  Package : HitoriCode
-//  File    : LandingFinishScreen.swift
+//  File    : EditMenu.swift
 //
 
 import SwiftUI
 
-struct LandingFinishScreen: View {
-    @ObservedObject private var windowManager = HitoriWindowManager.shared
-    @EnvironmentObject private var window: HitoriWindow
-
+struct EditMenu: View {
     var body: some View {
-        NavigationStack {
-            Spacer()
-            Text("Your Workspace is Ready!")
-                .font(.largeTitle)
-            Text("Let's get started")
-                .font(.title2)
-            Spacer()
-            HStack {
-                Button("Finish") {
-                    windowManager.newWindow()
-                    window.close()
-                }
-                .buttonStyle(.borderedProminent)
-            }
+        VStack {
+            Button("Undo") {}.keyboardShortcut("z")
+            Button("Redo") {}.keyboardShortcut("z", modifiers: [.command, .shift])
+            Divider()
+            Button("Cut") {}.keyboardShortcut("x")
+            Button("Copy") {}.keyboardShortcut("c")
+            Button("Paste") {}.keyboardShortcut("v")
+            Divider()
+            Button("Find") {}.keyboardShortcut("f")
+            Button("Replace") {}.keyboardShortcut("f", modifiers: [.command, .option])
+            Divider()
+            Button("Select All") {}.keyboardShortcut("a")
         }
     }
 }
