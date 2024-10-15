@@ -15,8 +15,11 @@
 
 import SwiftUI
 
+/**
+    Main Application Delegate for Managing the Application Lifecycle
+ */
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let windowManager = HitoriWindowManager.shared
+    private let windowManager = HitoriWindowManager.shared
 
     func applicationDidFinishLaunching(_: Notification) {
         print("init")

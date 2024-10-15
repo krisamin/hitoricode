@@ -15,8 +15,32 @@
 
 import Combine
 
+/// Base theme for set appearance of window
 enum HitoriBaseTheme {
-    case system, dark, light
+    /**
+     Following System appearance
+
+     ```swift
+      NSWindow.appearance = nil
+     ```
+     */
+    case system
+    /**
+     Use Dark appearance for application
+
+     ```swift
+      NSWindow.appearance = NSAppearance(named: .darkAqua)
+     ```
+     */
+    case dark
+    /**
+     Use Light appearance for application
+
+     ```swift
+      NSWindow.appearance = NSAppearance(named: .aqua)
+     ```
+     */
+    case light
 }
 
 enum HitoriTheme {
@@ -49,19 +73,34 @@ enum HitoriTheme {
     }
 }
 
+/// Window type enum for store Launch window
 enum HitoriLaunchWindow {
-    case welcome, workspace
+    /// Use Welcome window for launch
+    ///
+    /// Default value on first launch
+    case welcome
+    /// Use Workspace window for launch
+    case workspace
 }
 
+/**
+    Config state object for Hitori
+ */
 class HitoriConfig: ObservableObject {
-    static let shared = HitoriConfig()
+    /// The shared Hitori config object.
+    public static let shared = HitoriConfig()
 
-    @Published var firstLaunch: Bool = true
-    @Published var theme: HitoriTheme = .system
-    @Published var recentItems: [String] = []
-    @Published var launchWindow: HitoriLaunchWindow = .welcome
+    /// Application first launch flag
+    @Published public var firstLaunch: Bool = true
+    /// Application theme
+    @Published public var theme: HitoriTheme = .system
+    // TODO: 최근 파일 혹은 폴더 목록을 저장할 수 있도록 변경 : String -> 별도 Object
+    /// Recent file or folder list
+    @Published public var recentItems: [String] = []
+    /// Application launch window type
+    @Published public var launchWindow: HitoriLaunchWindow = .welcome
 
-    init() {
+    public init() {
         // TODO: 시스템 설정으로 가져와야 함. (재시작 시 유지되어야 함)
         firstLaunch = true
         theme = .system
@@ -69,6 +108,11 @@ class HitoriConfig: ObservableObject {
         launchWindow = .welcome
     }
 
+    /**
+        Add item to Recent item list
+
+        - Parameter item: Recent item to add
+     */
     public func addRecentItem(_ item: String) {
         recentItems.append(item)
     }
