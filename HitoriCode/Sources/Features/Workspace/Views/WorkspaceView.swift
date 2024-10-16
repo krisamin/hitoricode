@@ -26,7 +26,12 @@ struct WorkspaceView: View {
     var body: some View {
         BackgroundView {
             CodeEditorView(text: $editorContent, cursorPosition: $cursorPosition, lineCount: $lineCount)
-            Text("row \(cursorPosition.row), column \(cursorPosition.column)")
+//            Text("row \(cursorPosition.row), column \(cursorPosition.column)")
+            VStack {
+                Button("LSP REQUEST") {
+                    LSPRequests.initialize(processId: ProcessInfo.processInfo.processIdentifier)
+                }
+            }
         }
     }
 }

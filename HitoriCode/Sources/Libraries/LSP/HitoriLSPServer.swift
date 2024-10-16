@@ -17,18 +17,7 @@ import Foundation
 
 enum LSPRequests {
     static func initialize(processId: Int32) -> String {
-        """
-        {
-            "jsonrpc": "2.0",
-            "id": 1,
-            "method": "initialize",
-            "params": {
-                "processId": \(processId),
-                "rootUri": null,
-                "capabilities": {}
-            }
-        }
-        """
+        LSPInitializeRequest(id: 1, processId: Int(processId), rootUri: "", capabilities: nil).createRequest()
     }
 }
 
