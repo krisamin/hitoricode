@@ -33,6 +33,7 @@ class LSPInitializeParams: BaseParams {
 class LSPInitializeRequest: HitoriLSPMessage {
     typealias Params = LSPInitializeParams
 
+    let jsonrpc: String
     let id: Int
     let method: String
     let params: LSPInitializeParams
@@ -44,8 +45,9 @@ class LSPInitializeRequest: HitoriLSPMessage {
             capabilities!
         }
 
+        self.jsonrpc = "2.0"
         self.id = id
-        method = "initialize"
-        params = LSPInitializeParams(processId: processId, rootUri: rootUri, capabilities: cap)
+        self.method = "initialize"
+        self.params = LSPInitializeParams(processId: processId, rootUri: rootUri, capabilities: cap)
     }
 }

@@ -30,8 +30,6 @@ protocol HitoriLSPMessage: Codable {
 }
 
 extension HitoriLSPMessage {
-    var jsonrpc: String { "2.0" }
-
     func buildJson(prettyPrinted: Bool = false) -> String {
         let encoder = JSONEncoder()
 
