@@ -26,10 +26,13 @@ struct WorkspaceView: View {
     var body: some View {
         BackgroundView {
             CodeEditorView(text: $editorContent, cursorPosition: $cursorPosition, lineCount: $lineCount)
-//            Text("row \(cursorPosition.row), column \(cursorPosition.column)")
             VStack {
-                Button("LSP REQUEST") {
-                    LSPRequests.initialize(processId: ProcessInfo.processInfo.processIdentifier)
+                Text("row \(cursorPosition.row), column \(cursorPosition.column)")
+                Button("read runtime config") {
+                    HitoriRuntimeManager.shared.readConfigFile()
+                }
+                Button("write runtime config") {
+                    HitoriRuntimeManager.shared.writeConfigFile()
                 }
             }
         }

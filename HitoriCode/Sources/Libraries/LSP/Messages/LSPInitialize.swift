@@ -45,9 +45,9 @@ class LSPInitializeRequest: HitoriLSPMessage {
             capabilities!
         }
 
-        self.jsonrpc = "2.0"
+        jsonrpc = "2.0"
         self.id = id
-        self.method = "initialize"
-        self.params = LSPInitializeParams(processId: processId, rootUri: rootUri, capabilities: cap)
+        method = "initialize"
+        params = LSPInitializeParams(processId: processId, rootUri: rootUri, capabilities: cap)
     }
 }

@@ -14,6 +14,7 @@
 //
 
 import Combine
+import Foundation
 
 /// Base theme for set appearance of window
 enum HitoriBaseTheme {
@@ -96,7 +97,7 @@ class HitoriConfig: ObservableObject {
     @Published public var theme: HitoriTheme = .system
     // TODO: 최근 파일 혹은 폴더 목록을 저장할 수 있도록 변경 : String -> 별도 Object
     /// Recent file or folder list
-    @Published public var recentItems: [String] = []
+    @Published public var recentItems: [HitoriFileItem] = []
     /// Application launch window type
     @Published public var launchWindow: HitoriLaunchWindow = .welcome
 
@@ -113,7 +114,7 @@ class HitoriConfig: ObservableObject {
 
         - Parameter item: Recent item to add
      */
-    public func addRecentItem(_ item: String) {
+    public func addRecentItem(_ item: HitoriFileItem) {
         recentItems.append(item)
     }
 }
