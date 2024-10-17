@@ -22,22 +22,19 @@ enum RuntimeArchiteture: String, Codable {
 
 enum RemoteRuntime {
     // swiftlint:disable identifier_name
-    case nodejs_18_aarch64
-    case nodejs_18_aarch64_suck
+    case nodejs_20_aarch64
     // swiftlint:enable identifier_name
 
     var runtime: HitoriRuntime {
         switch self {
-        case .nodejs_18_aarch64:
+        case .nodejs_20_aarch64:
             HitoriRuntime(
                 name: "nodejs",
-                version: "v18.10.0",
+                version: "v20.18.0",
                 architecture: .aarch64,
-                origin: "https://nodejs.org/dist/v18.10.0/node-v18.10.0-linux-arm",
+                origin: "https://hitoricode.bucket.self.land/runtimes/node-v20.18.0-darwin-arm64.tar.gz",
                 path: nil
             )
-        default:
-            "" as! HitoriRuntime
         }
     }
 }
