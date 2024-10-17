@@ -54,6 +54,7 @@ class HitoriFileManager {
             }
         }
 
+        print(appSupportDir.path)
         return appSupportDir.path
     }
 

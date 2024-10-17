@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73EED7832CC0CAE300229B7A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 73EED7822CC0CAE300229B7A /* Alamofire */; };
+		73EED7862CC0CB0A00229B7A /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 73EED7852CC0CB0A00229B7A /* Zip */; };
 		73F7C3372CB5538000D24700 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 73F7C3352CB5538000D24700 /* .swiftlint.yml */; };
 		73F7C3382CB5538000D24700 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 73F7C3362CB5538000D24700 /* README.md */; };
 		73F7C3392CB5538000D24700 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = 73F7C3342CB5538000D24700 /* .swiftformat */; };
@@ -47,6 +49,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73EED7862CC0CB0A00229B7A /* Zip in Frameworks */,
+				73EED7832CC0CAE300229B7A /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +99,8 @@
 			);
 			name = HitoriCode;
 			packageProductDependencies = (
+				73EED7822CC0CAE300229B7A /* Alamofire */,
+				73EED7852CC0CB0A00229B7A /* Zip */,
 			);
 			productName = HitoriCode;
 			productReference = 73F7C2E62CB552C300D24700 /* HitoriCode.app */;
@@ -127,6 +133,8 @@
 			packageReferences = (
 				733C0E142CB56F8400F5F924 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				733C0E152CB56F8B00F5F924 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
+				73EED7812CC0CAE300229B7A /* XCRemoteSwiftPackageReference "Alamofire" */,
+				73EED7842CC0CB0A00229B7A /* XCRemoteSwiftPackageReference "Zip" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 73F7C2E72CB552C300D24700 /* Products */;
@@ -420,7 +428,36 @@
 				minimumVersion = 0.54.5;
 			};
 		};
+		73EED7812CC0CAE300229B7A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.0;
+			};
+		};
+		73EED7842CC0CB0A00229B7A /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		73EED7822CC0CAE300229B7A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73EED7812CC0CAE300229B7A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		73EED7852CC0CB0A00229B7A /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73EED7842CC0CB0A00229B7A /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 73F7C2DE2CB552C300D24700 /* Project object */;
 }
